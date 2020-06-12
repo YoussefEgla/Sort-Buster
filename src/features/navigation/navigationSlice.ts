@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
 
-interface NavigationState {
+export interface NavigationState {
   method:
     | "BUBBLE"
     | "SELECTION"
