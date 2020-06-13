@@ -1,24 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { create, sort, createUserDefined } from "./controlsSlice";
-import { activeMethod } from "../../store/AppReducer";
-import {
-  makeStyles,
-  Button,
-  Tabs,
-  Tab,
-  Theme,
-  TextField,
-  Divider,
-} from "@material-ui/core";
+import { makeStyles, Tabs, Tab, Theme } from "@material-ui/core";
 import { TabPanel } from "../../components";
+import * as Container from "../../containers/Create";
 
 export function Controls() {
-  const method = useSelector(activeMethod);
-  const dispatch = useDispatch();
-
   const [activePanel, setActivePanel] = React.useState("CREATE");
-  const [createInput, setCreateInput] = React.useState("23, 27, 13, 5");
 
   const classes = useStyles();
   return (
@@ -35,57 +21,8 @@ export function Controls() {
       </div>
 
       <TabPanel current={activePanel} name="CREATE">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "75%",
-            margin: "0 auto 25px auto",
-          }}
-        >
-          <Button
-            onClick={() => dispatch(create("RANDOM"))}
-            variant="contained"
-            color="primary"
-          >
-            Random set
-          </Button>
-          <Button
-            onClick={() => dispatch(create("SORTED"))}
-            variant="contained"
-            color="primary"
-          >
-            Sorted set
-          </Button>
-        </div>
-        <Divider />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "75%",
-            margin: "25px auto 0 auto",
-          }}
-        >
-          <TextField
-            id="user-defined-set"
-            label="Custom Set"
-            helperText="Comma separated numbers"
-            value={createInput}
-            onChange={(e) => setCreateInput(e.target.value)}
-          />
-          <div style={{ margin: "auto 0" }}>
-            <Button
-              onClick={() => dispatch(createUserDefined(createInput))}
-              variant="contained"
-              color="primary"
-            >
-              Custom Set
-            </Button>
-          </div>
-        </div>
+        <Container.Create />
       </TabPanel>
-
       <TabPanel current={activePanel} name="SORT">
         <span>Sorting Panel</span>
       </TabPanel>

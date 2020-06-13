@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, Action } from "@reduxjs/toolkit";
 import { RootState } from "./";
+import * as functions from "./functions";
 
 export interface AppState {
   module: "SORTING";
@@ -31,20 +32,34 @@ export const AppSlice = createSlice({
     ) => {
       switch (action.payload) {
         case "RANDOM":
-          return state;
+          return {
+            ...state,
+            dataSet: functions.randomSet(),
+          };
 
         case "NEARLY SORTED":
           return state;
 
         case "SORTED":
-          return state;
+          return {
+            ...state,
+            dataSet: functions.randomSet(true),
+          };
 
         default:
           return state;
       }
     },
-    createDefined: (state, action: PayloadAction<AppState["dataSet"]>) => {
-      return { ...state, dataSet: action.payload };
+    createDefined: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        dataSet: action.payload
+          .replace(/[^1-9,]/g, "")
+          .trim()
+          .split(",")
+          .filter((v) => !isNaN(parseInt(v)))
+          .map((v, i) => ({ value: parseInt(v), id: `${v}-${i}` })),
+      };
     },
     sort: (state, action: PayloadAction<AppState["method"]>) => {
       switch (action.payload) {
@@ -76,5 +91,6 @@ export const AppSlice = createSlice({
 export const AppActions = AppSlice.actions;
 
 export const activeMethod = (state: RootState) => state.App.method;
+export const currentSet = (state: RootState) => state.App.dataSet;
 
 export default AppSlice.reducer;
