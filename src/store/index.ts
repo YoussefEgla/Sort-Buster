@@ -1,11 +1,9 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import controlsReducer from "../features/controls/controlsSlice";
-import AppReducer from "./AppReducer";
+import GeneralReducer from "./GeneralSlice";
 
 export const store = configureStore({
   reducer: {
-    controls: controlsReducer,
-    App: AppReducer,
+    general: GeneralReducer,
   },
 });
 
