@@ -1,12 +1,11 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
 import * as Material from "@material-ui/core";
-
-import { activeMethod } from "../store/AppReducer";
+import * as GeneralState from "../store/GeneralSlice";
 import { NavTab } from "./NavTab";
 
 export function Navigation() {
-  const method = ReactRedux.useSelector(activeMethod);
+  const currentMethod = ReactRedux.useSelector(GeneralState.currentMethod);
 
   const classes = useStyles();
 
@@ -18,20 +17,20 @@ export function Navigation() {
         </Material.Button>
 
         <Material.Tabs
-          value={method}
+          value={currentMethod}
           indicatorColor="secondary"
           scrollButtons="auto"
           variant="scrollable"
           className={classes.methods}
         >
-          <NavTab value="BUBBLE" abbr="BBL" />
-          <NavTab value="SELECTION" abbr="SEL" />
-          <NavTab value="INSERTION" abbr="INS" />
-          <NavTab value="MERGE" abbr="MRG" />
-          <NavTab value="QUICK" abbr="QUI" />
-          <NavTab value="QUICK RANDOM" abbr="R-Q" />
-          <NavTab value="COUNTING" abbr="COU" />
-          <NavTab value="RADIX" abbr="RDX" />
+          <NavTab value="BUBBLE SORT" abbr="BBL" />
+          <NavTab value="SELECTION SORT" abbr="SEL" />
+          <NavTab value="INSERTION SORT" abbr="INS" />
+          <NavTab value="MERGE SORT" abbr="MRG" />
+          <NavTab value="QUICK SORT" abbr="QUI" />
+          <NavTab value="RANDOM QUICK SORT" abbr="R-Q" />
+          <NavTab value="COUNTING SORT" abbr="COU" />
+          <NavTab value="RADIX SORT" abbr="RDX" />
         </Material.Tabs>
       </div>
     </nav>

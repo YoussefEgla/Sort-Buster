@@ -1,22 +1,26 @@
 import React from "react";
 import * as Material from "@material-ui/core";
 import * as ReactRedux from "react-redux";
-import { AppActions, activeMethod, AppState } from "../store/AppReducer";
+import * as GeneralSlice from "../store/GeneralSlice";
+import { GeneralState } from "../store/GeneralSlice";
 
 interface NavTabProps {
-  value: AppState["method"];
+  value: GeneralState["method"];
   abbr: string;
 }
 
 export function NavTab(props: NavTabProps) {
   const dispatch = ReactRedux.useDispatch(),
-    method = ReactRedux.useSelector(activeMethod),
-    text = method === props.value ? props.value : props.abbr;
+    currentMethod = ReactRedux.useSelector(GeneralSlice.currentMethod),
+    text =
+      currentMethod === props.value
+        ? props.value.replace(/SORT/, "").trim()
+        : props.abbr;
 
   return (
     <Material.Tab
       label={text}
-      onClick={() => dispatch(AppActions.setMethod(props.value))}
+      onClick={() => dispatch(GeneralSlice.setMethod(props.value))}
     />
   );
 }
