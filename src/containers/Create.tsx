@@ -26,14 +26,14 @@ export function Create() {
           Random set
         </Material.Button>
         <Material.Button
-          onClick={() => dispatch(AppActions.create("SORTED"))}
+          onClick={() => dispatch(AppActions.create("NEARLY SORTED"))}
           variant="contained"
           color="primary"
         >
           Nearly Sorted
         </Material.Button>
         <Material.Button
-          onClick={() => dispatch(AppActions.create("NEARLY SORTED"))}
+          onClick={() => dispatch(AppActions.create("SORTED"))}
           variant="contained"
           color="primary"
         >

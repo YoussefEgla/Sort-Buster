@@ -19,7 +19,7 @@ export interface AppState {
 const initialState: AppState = {
   module: "SORTING",
   method: "BUBBLE",
-  dataSet: [],
+  dataSet: functions.randomSet(),
 };
 
 export const AppSlice = createSlice({

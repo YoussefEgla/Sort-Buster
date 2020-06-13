@@ -1,41 +1,17 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { makeStyles, Theme } from "@material-ui/core";
 import { Controls } from "./features/controls/Controls";
-import { currentSet } from "./features/controls/controlsSlice";
-import { scaleLinear } from "d3-scale";
-import { Bar } from "./components/Bar";
 import * as Components from "./components";
+import * as Containers from "./containers";
 
 function App() {
   const classes = useStyles();
-  const dispatch = useDispatch();
-
-  const data = useSelector(currentSet);
-
-  const width = data.length * 25;
-
-  const linearScale = scaleLinear()
-    .domain([Math.min(...data) - 1, Math.max(...data)])
-    .range([0, 100]);
-
-  const v = linearScale(Math.max(...data));
-  const bars = data.map((v, i) => (
-    <Bar height={linearScale(v)} x={i * 25} value={v} key={i} />
-  ));
 
   return (
     <div className={classes.root}>
       <Components.Navigation />
       <div className={classes.topContainer}>
-        <svg
-          width={width}
-          height="100"
-          style={{ margin: "auto" }}
-          transform="scale(1, -1) translate(0, -100)"
-        >
-          {bars}
-        </svg>
+        <Containers.Representation />
       </div>
       <div className={classes.bottomContainer}>
         <Controls />

@@ -14,5 +14,12 @@ interface BarProps {
 
 export function Bar(props: BarProps) {
   const { height, x, value } = props;
-  return <rect height={`${height}%`} x={`${x}px`} width="24px" />;
+  return (
+    <rect
+      height={`${height}%`}
+      x={`${x}px`}
+      width="24px"
+      transform="scale(1, -1) translate(0, -200)"
+    />
+  );
 }
