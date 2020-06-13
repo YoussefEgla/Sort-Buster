@@ -1,3 +1,5 @@
+import * as uuid from "uuid";
+
 export function randomNum(max: number, min = 0) {
   return Math.round(Math.random() * max + min);
 }
@@ -5,7 +7,9 @@ export function randomNum(max: number, min = 0) {
 export function randomSet(sorted = false) {
   const set = Array.from({ length: randomNum(45, 3) }).map((v, i) => ({
     value: randomNum(200, 0),
-    id: String(i),
+    id: uuid.v4(),
+    active: false,
+    done: false,
   }));
 
   if (sorted) {

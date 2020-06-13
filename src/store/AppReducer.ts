@@ -13,7 +13,7 @@ export interface AppState {
     | "QUICK RANDOM"
     | "COUNTING"
     | "RADIX";
-  dataSet: { value: number; id: string }[];
+  dataSet: { value: number; id: string; active: boolean; done: boolean }[];
 }
 
 const initialState: AppState = {
@@ -58,7 +58,12 @@ export const AppSlice = createSlice({
           .trim()
           .split(",")
           .filter((v) => !isNaN(parseInt(v)))
-          .map((v, i) => ({ value: parseInt(v), id: `${v}-${i}` })),
+          .map((v, i) => ({
+            value: parseInt(v),
+            id: `${v}-${i}`,
+            active: false,
+            done: false,
+          })),
       };
     },
     sort: (state, action: PayloadAction<AppState["method"]>) => {

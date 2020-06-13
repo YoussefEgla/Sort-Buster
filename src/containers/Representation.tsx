@@ -1,7 +1,7 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
 import * as d3Scale from "d3-scale";
-import { currentSet } from "../store/AppReducer";
+import { currentSet, AppState } from "../store/AppReducer";
 import * as Components from "../components";
 
 export function Representation() {
@@ -24,6 +24,8 @@ export function Representation() {
       x={i * 25}
       value={v.value}
       key={v.id}
+      active={v.active}
+      done={v.done}
     />
   ));
 
