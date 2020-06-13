@@ -6,6 +6,7 @@ import { Controls } from "./features/controls/Controls";
 import { currentSet } from "./features/controls/controlsSlice";
 import { scaleLinear } from "d3-scale";
 import { Bar } from "./components/Bar";
+import * as Components from "./components";
 
 function App() {
   const classes = useStyles();
@@ -26,7 +27,7 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <Navigation />
+      <Components.Navigation />
       <div className={classes.topContainer}>
         <svg
           width={width}
