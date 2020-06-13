@@ -8,40 +8,10 @@ import {
   Tabs,
   Tab,
   Theme,
-  Box,
-  Typography,
-  Slide,
   TextField,
   Divider,
 } from "@material-ui/core";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  name: any;
-  current: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, name, current, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={current !== name}
-      {...other}
-      style={{
-        overflow: "hidden",
-        width: "100%",
-      }}
-    >
-      {current === name && (
-        <Slide direction="up" in={current === name} mountOnEnter unmountOnExit>
-          <Box p={3}>{children}</Box>
-        </Slide>
-      )}
-    </div>
-  );
-}
+import { TabPanel } from "../../components";
 
 export function Controls() {
   const method = useSelector(activeMethod);
