@@ -8,7 +8,7 @@ import {
   ActionCreator,
   Action,
 } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "../../app/store";
+import { AppThunk, RootState } from "../../store";
 
 import { NavigationState } from "../navigation/navigationSlice";
 

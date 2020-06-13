@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles, Theme } from "@material-ui/core";
-import { Navigation } from "./features/navigation/Navigation";
 import { Controls } from "./features/controls/Controls";
 import { currentSet } from "./features/controls/controlsSlice";
 import { scaleLinear } from "d3-scale";
