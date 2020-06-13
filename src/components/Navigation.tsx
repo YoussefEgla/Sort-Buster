@@ -2,7 +2,7 @@ import React from "react";
 import * as ReactRedux from "react-redux";
 import * as Material from "@material-ui/core";
 
-import { activeMethod } from "../features/navigation/navigationSlice";
+import { activeMethod } from "../store/AppReducer";
 import { NavTab } from "./NavTab";
 
 export function Navigation() {

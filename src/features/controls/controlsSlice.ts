@@ -1,16 +1,6 @@
-import {
-  createSlice,
-  PayloadAction,
-  ActionCreatorWithPayload,
-  ActionCreatorWithoutPayload,
-  PayloadActionCreator,
-  ActionCreatorWithPreparedPayload,
-  ActionCreator,
-  Action,
-} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../store";
-
-import { NavigationState } from "../navigation/navigationSlice";
+import { AppState } from "../../store/AppReducer";
 
 function createRandomSet() {
   return Array.from({
@@ -57,7 +47,7 @@ export const ControlsSlice = createSlice({
           .map((v) => parseInt(v)),
       };
     },
-    sort: (state, action: PayloadAction<NavigationState["method"]>) => {
+    sort: (state, action: PayloadAction<AppState["method"]>) => {
       switch (action.payload) {
         case "BUBBLE":
           break;

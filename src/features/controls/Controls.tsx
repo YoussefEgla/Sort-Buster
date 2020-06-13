@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { create, sort, createUserDefined } from "./controlsSlice";
-import { activeMethod } from "../navigation/navigationSlice";
+import { activeMethod } from "../../store/AppReducer";
 import {
   makeStyles,
   Button,

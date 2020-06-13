@@ -1,11 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import navigationReducer from "../features/navigation/navigationSlice";
 import controlsReducer from "../features/controls/controlsSlice";
+import AppReducer from "./AppReducer";
 
 export const store = configureStore({
   reducer: {
-    navigation: navigationReducer,
     controls: controlsReducer,
+    App: AppReducer,
   },
 });
 
