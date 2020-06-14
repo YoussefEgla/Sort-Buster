@@ -29,6 +29,16 @@ const generalSlice = createSlice({
         utils.sortArr(utils.randomSet(len, maxValue), desc)
       );
     },
+    createNearlySorted: (
+      state,
+      action: PayloadAction<CREATE_NEARLY_SORTED>
+    ) => {
+      const { len, maxValue, desc } = action.payload;
+
+      state.dataSet = utils.prepareDataSet(
+        utils.nearlySortArr(utils.randomSet(len, maxValue), desc)
+      );
+    },
     createUserDefined: (state, action: PayloadAction<string>) => {
       state.dataSet = utils.prepareDataSet(utils.strToArr(action.payload));
     },
@@ -48,6 +58,7 @@ export const {
   createRandom,
   createSorted,
   createUserDefined,
+  createNearlySorted,
 } = generalSlice.actions;
 
 //

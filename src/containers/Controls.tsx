@@ -24,7 +24,7 @@ export function Controls() {
         <Container.Create />
       </Component.TabPanel>
       <Component.TabPanel current={activePanel} name="SORT">
-        <span>Sorting Panel</span>
+        <Container.Sort />
       </Component.TabPanel>
     </div>
   );

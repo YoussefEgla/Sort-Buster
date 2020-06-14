@@ -26,7 +26,7 @@ export function Create() {
           Random set
         </Material.Button>
         <Material.Button
-          onClick={() => dispatch(GeneralSlice.createSorted({}))}
+          onClick={() => dispatch(GeneralSlice.createNearlySorted({}))}
           variant="contained"
           color="primary"
         >

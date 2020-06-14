@@ -33,7 +33,7 @@ export function randomNum(max: number, min = -1) {
  * Generate Random Array of numbers
  */
 export function randomSet(len?: number, maxValue?: number): number[] {
-  return Array.from({ length: len || randomNum(35) }).map(() =>
+  return Array.from({ length: len || randomNum(35, 2) }).map(() =>
     randomNum(maxValue || 500)
   );
 }
@@ -54,8 +54,8 @@ export function sortArr(arr: number[], desc = false): number[] {
  */
 export function nearlySortArr(
   arr: number[],
-  percent = 0.7,
-  desc = false
+  desc = false,
+  percent = 0.8
 ): number[] {
   const max = Math.max(...arr);
   const min = Math.min(...arr);
@@ -63,6 +63,12 @@ export function nearlySortArr(
   if (desc) {
     return arr.sort((a, b) => b - a);
   } else {
-    return arr.sort((a, b) => a - b);
+    return arr.sort((a, b) => {
+      return Math.random() < percent ? a - b : b - a;
+    });
   }
+}
+
+export function bubbleSort(arr: DATA_SET): SORTING_STEPS {
+  return [arr];
 }
