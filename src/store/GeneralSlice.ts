@@ -4,12 +4,12 @@ import { RootState } from "./";
 
 export interface GeneralState {
   method: SORTING_METHOD;
-  dataSet: DATA_SET | null;
+  dataSet: DATA_SET;
 }
 
 const initialState: GeneralState = {
   method: "BUBBLE SORT",
-  dataSet: null,
+  dataSet: utils.prepareDataSet(utils.randomSet()),
 };
 
 const generalSlice = createSlice({

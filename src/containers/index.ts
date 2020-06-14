@@ -1,2 +1,3 @@
 export { Create } from "./Create";
-export { Representation } from "./Representation";
+export { Controls } from "./Controls";
+export { Viz } from "./Viz";

@@ -1,11 +1,11 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
 import * as d3Scale from "d3-scale";
-import { currentSet, AppState } from "../store/AppReducer";
 import * as Components from "../components";
+import * as GeneralSlice from "../store/GeneralSlice";
 
-export function Representation() {
-  const data = ReactRedux.useSelector(currentSet);
+export function Viz() {
+  const data = ReactRedux.useSelector(GeneralSlice.dataSet);
 
   const BarWidth = 24;
   const width = data.length * (BarWidth + 1);
@@ -24,8 +24,6 @@ export function Representation() {
       x={i * 25}
       value={v.value}
       key={v.id}
-      active={v.active}
-      done={v.done}
     />
   ));
 

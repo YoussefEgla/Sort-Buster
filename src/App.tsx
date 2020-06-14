@@ -1,20 +1,19 @@
 import React from "react";
 import { makeStyles, Theme } from "@material-ui/core";
-import { Controls } from "./features/controls/Controls";
-import * as Components from "./components";
-import * as Containers from "./containers";
+import * as Component from "./components";
+import * as Container from "./containers";
 
 function App() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Components.Navigation />
+      <Component.Navigation />
       <div className={classes.topContainer}>
-        <Containers.Representation />
+        <Container.Viz />
       </div>
       <div className={classes.bottomContainer}>
-        <Controls />
+        <Container.Controls />
         <div>Code Explaination</div>
       </div>
     </div>

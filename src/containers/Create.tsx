@@ -1,7 +1,7 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
 import * as Material from "@material-ui/core";
-import { AppActions } from "../store/AppReducer";
+import * as GeneralSlice from "../store/GeneralSlice";
 
 export function Create() {
   const dispatch = ReactRedux.useDispatch();
@@ -19,21 +19,21 @@ export function Create() {
         }}
       >
         <Material.Button
-          onClick={() => dispatch(AppActions.create("RANDOM"))}
+          onClick={() => dispatch(GeneralSlice.createRandom({}))}
           variant="contained"
           color="primary"
         >
           Random set
         </Material.Button>
         <Material.Button
-          onClick={() => dispatch(AppActions.create("NEARLY SORTED"))}
+          onClick={() => dispatch(GeneralSlice.createSorted({}))}
           variant="contained"
           color="primary"
         >
           Nearly Sorted
         </Material.Button>
         <Material.Button
-          onClick={() => dispatch(AppActions.create("SORTED"))}
+          onClick={() => dispatch(GeneralSlice.createSorted({}))}
           variant="contained"
           color="primary"
         >
@@ -58,7 +58,9 @@ export function Create() {
         />
         <div style={{ margin: "auto 0" }}>
           <Material.Button
-            onClick={() => dispatch(AppActions.createDefined(createInput))}
+            onClick={() =>
+              dispatch(GeneralSlice.createUserDefined(createInput))
+            }
             variant="contained"
             color="primary"
           >
