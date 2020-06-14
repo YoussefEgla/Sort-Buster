@@ -30,8 +30,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: "55vh",
     width: "100%",
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   },
   bottomContainer: {
     height: "36.9vh",

@@ -3,12 +3,20 @@ import * as ReactRedux from "react-redux";
 import * as d3Scale from "d3-scale";
 import * as Components from "../components";
 import * as GeneralSlice from "../store/GeneralSlice";
+import * as SortingSlice from "../store/SortingSlice";
 
 export function Viz() {
-  const data = ReactRedux.useSelector(GeneralSlice.dataSet);
+  const dataSet = ReactRedux.useSelector(GeneralSlice.dataSet);
+  const sortingSteps = ReactRedux.useSelector(SortingSlice.sortingSteps);
+  const currentStep = ReactRedux.useSelector(SortingSlice.currentStep);
+
+  const data =
+    sortingSteps && sortingSteps[0] === dataSet
+      ? sortingSteps[currentStep]
+      : dataSet;
 
   const BarWidth = 24;
-  const width = data.length * (BarWidth + 1);
+  const width = data ? data.length * (BarWidth + 1) : 500;
 
   const linearScale = d3Scale
     .scaleLinear()

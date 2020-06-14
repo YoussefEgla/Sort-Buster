@@ -70,5 +70,34 @@ export function nearlySortArr(
 }
 
 export function bubbleSort(arr: DATA_SET): SORTING_STEPS {
-  return [arr];
+  const steps = [arr];
+
+  let swapped: boolean;
+  let n = arr.length - 1;
+  let currentArr = arr;
+
+  do {
+    swapped = false;
+
+    for (let i = 0; i < n; i++) {
+      if (currentArr[i].value > currentArr[i + 1].value) {
+        // make a new copy of the current array
+        let newArr = [...currentArr];
+
+        // swap the values of the new copy
+        [newArr[i], newArr[i + 1]] = [newArr[i + 1], newArr[i]];
+
+        // push the new copy as a step
+        steps.push(newArr);
+
+        // make the currentArr variable = newArr
+        currentArr = newArr;
+
+        swapped = true;
+      }
+    }
+    n--;
+  } while (swapped);
+
+  return steps;
 }
