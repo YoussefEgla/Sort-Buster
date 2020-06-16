@@ -31,6 +31,10 @@ const sortingSlice = createSlice({
     decrementStep: (state) => {
       state.currentStep -= 1;
     },
+    setDone: (state, action: PayloadAction<boolean>) => {
+      state.done = action.payload;
+      state.currentStep = 0;
+    },
     bubble: (state, action: PayloadAction<DATA_SET>) => {
       state.sortingSteps = utils.bubbleSort(action.payload);
     },
@@ -61,6 +65,7 @@ export const {
   radix,
   incrementStep,
   decrementStep,
+  setDone,
 } = sortingSlice.actions;
 
 //

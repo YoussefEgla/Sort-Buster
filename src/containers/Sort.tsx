@@ -16,11 +16,13 @@ export function Sort() {
   React.useEffect(() => {
     if ((steps === null || dataSet !== steps[0]) && !isDone) {
       dispatch(SortingSlice.bubble(dataSet));
+    } else if (steps !== null && dataSet !== steps[0] && isDone) {
+      dispatch(SortingSlice.setDone(false));
     }
 
-    setTimeout(() => {
-      dispatch(SortingSlice.incrementStep());
-    }, 500);
+    // setTimeout(() => {
+    //   dispatch(SortingSlice.incrementStep());
+    // }, 500);
   });
 
   return (
