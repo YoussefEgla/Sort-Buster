@@ -3,19 +3,27 @@ import * as ReactRedux from "react-redux";
 import * as Slice from "../store/Slice";
 import * as Material from "@material-ui/core";
 
+function Slider() {
+  const dispatch = ReactRedux.useDispatch();
+
+  const sortingSteps = ReactRedux.useSelector(Slice.sortingSteps);
+  const currentStep = ReactRedux.useSelector(Slice.currentStep);
+
+  return (
+    <Material.Slider
+      value={currentStep}
+      min={0}
+      max={sortingSteps ? sortingSteps.length - 1 : 1}
+      onChange={(e, v) => {
+        dispatch(Slice.actions.nextStep());
+      }}
+    />
+  );
+}
+
 export function Sort() {
   const classes = useStyles();
   const dispatch = ReactRedux.useDispatch();
-  const sortingSteps = ReactRedux.useSelector(Slice.sortingSteps);
-  const currentStep = ReactRedux.useSelector(Slice.currentStep);
-  const isDone = ReactRedux.useSelector(Slice.areStepsDone);
-
-  React.useEffect(() => {
-    // dispatch(Slice.actions.sort());
-    // } else if (sortingSteps !== null && dataSet !== steps[0] && isDone) {
-    //   dispatch(Slice.actions.setDone(false));
-    // }
-  });
 
   return (
     <React.Fragment>
@@ -34,17 +42,16 @@ export function Sort() {
       <div className={classes.bottomContainer}>
         <div className={classes.slider}>
           <Material.Typography>Progress</Material.Typography>
-          <Material.Slider
-            value={currentStep}
-            step={1}
-            min={1}
-            marks
-            max={sortingSteps ? sortingSteps.length - 1 : 1}
-            onChange={(e, v) => {
-              dispatch(Slice.actions.nextStep());
-            }}
-          />
+          <Slider />
         </div>
+        <Material.ButtonGroup size="small" aria-label="Control Sorting">
+          <Material.Button onClick={() => dispatch(Slice.actions.prevStep())}>
+            Prev Step
+          </Material.Button>
+          <Material.Button onClick={() => dispatch(Slice.actions.nextStep())}>
+            Next Step
+          </Material.Button>
+        </Material.ButtonGroup>
       </div>
     </React.Fragment>
   );
@@ -59,7 +66,9 @@ const useStyles = Material.makeStyles((theme: Material.Theme) => ({
   },
   bottomContainer: {
     display: "flex",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    // justifyContent: "space-between",
+    alignItems: "center",
     width: "75%",
     margin: "25px auto 0 auto",
   },

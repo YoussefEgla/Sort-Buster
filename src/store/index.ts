@@ -12,8 +12,8 @@ export const store = configureStore({
   },
   middleware: getDefaultMiddleware({
     thunk: true,
-    immutableCheck: true,
-    serializableCheck: true,
+    immutableCheck: false,
+    serializableCheck: false,
   }),
 });
 

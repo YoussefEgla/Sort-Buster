@@ -34,6 +34,7 @@ const generalSlice = createSlice({
     setMethod(state, action: PayloadAction<SORTING_METHOD>) {
       state.method = action.payload;
       state.sortingSteps = utils.generateSteps(state.method)(state.dataSet);
+      state.currentStep = 0;
     },
     //
     // Create action
@@ -73,6 +74,7 @@ const generalSlice = createSlice({
         }
       }
       state.sortingSteps = utils.generateSteps(state.method)(state.dataSet);
+      state.currentStep = 0;
     },
 
     //
