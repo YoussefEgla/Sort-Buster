@@ -20,6 +20,9 @@ function Slider() {
       value={currentStep}
       min={sortingSteps.length === 1 ? 1 : 0}
       max={sortingSteps.length - 1}
+      onChange={(e, v) => {
+        dispatch(Slice.actions.goToStep(typeof v === "number" ? v : v[0]));
+      }}
     />
   );
 }

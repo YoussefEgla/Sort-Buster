@@ -105,6 +105,9 @@ const generalSlice = createSlice({
         state.areStepsDone = false;
       }
     },
+    goToStep(state, action: PayloadAction<number>) {
+      state.currentStep = action.payload;
+    },
     //
     // Play / Pause
     //
