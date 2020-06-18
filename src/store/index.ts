@@ -1,12 +1,20 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import GeneralReducer from "./GeneralSlice";
-import SortingReducer from "./SortingSlice";
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
+import GeneralReducer from "./Slice";
 
 export const store = configureStore({
   reducer: {
     general: GeneralReducer,
-    sorting: SortingReducer,
   },
+  middleware: getDefaultMiddleware({
+    thunk: true,
+    immutableCheck: true,
+    serializableCheck: true,
+  }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

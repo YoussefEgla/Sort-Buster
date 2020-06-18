@@ -2,13 +2,12 @@ import React from "react";
 import * as ReactRedux from "react-redux";
 import * as d3Scale from "d3-scale";
 import * as Components from "../components";
-import * as GeneralSlice from "../store/GeneralSlice";
-import * as SortingSlice from "../store/SortingSlice";
+import * as Slice from "../store/Slice";
 
 export function Viz() {
-  const dataSet = ReactRedux.useSelector(GeneralSlice.dataSet);
-  const sortingSteps = ReactRedux.useSelector(SortingSlice.sortingSteps);
-  const currentStep = ReactRedux.useSelector(SortingSlice.currentStep);
+  const dataSet = ReactRedux.useSelector(Slice.dataSet);
+  const sortingSteps = ReactRedux.useSelector(Slice.sortingSteps);
+  const currentStep = ReactRedux.useSelector(Slice.currentStep);
 
   const data =
     sortingSteps && sortingSteps[0] === dataSet

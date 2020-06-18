@@ -1,28 +1,20 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
-import * as GeneralSlice from "../store/GeneralSlice";
-import * as SortingSlice from "../store/SortingSlice";
+import * as Slice from "../store/Slice";
 import * as Material from "@material-ui/core";
 
 export function Sort() {
   const classes = useStyles();
   const dispatch = ReactRedux.useDispatch();
-  const currentMethod = ReactRedux.useSelector(GeneralSlice.currentMethod);
-  const dataSet = ReactRedux.useSelector(GeneralSlice.dataSet);
-  const steps = ReactRedux.useSelector(SortingSlice.sortingSteps);
-  const currentStep = ReactRedux.useSelector(SortingSlice.currentStep);
-  const isDone = ReactRedux.useSelector(SortingSlice.isDone);
+  const sortingSteps = ReactRedux.useSelector(Slice.sortingSteps);
+  const currentStep = ReactRedux.useSelector(Slice.currentStep);
+  const isDone = ReactRedux.useSelector(Slice.areStepsDone);
 
   React.useEffect(() => {
-    if ((steps === null || dataSet !== steps[0]) && !isDone) {
-      dispatch(SortingSlice.bubble(dataSet));
-    } else if (steps !== null && dataSet !== steps[0] && isDone) {
-      dispatch(SortingSlice.setDone(false));
-    }
-
-    // setTimeout(() => {
-    //   dispatch(SortingSlice.incrementStep());
-    // }, 500);
+    // dispatch(Slice.actions.sort());
+    // } else if (sortingSteps !== null && dataSet !== steps[0] && isDone) {
+    //   dispatch(Slice.actions.setDone(false));
+    // }
   });
 
   return (
@@ -31,7 +23,7 @@ export function Sort() {
         <Material.Button
           variant="contained"
           color="primary"
-          onClick={() => dispatch(SortingSlice.bubble(dataSet))}
+          onClick={() => dispatch(Slice.actions.sort())}
         >
           Sort
         </Material.Button>
@@ -45,11 +37,11 @@ export function Sort() {
           <Material.Slider
             value={currentStep}
             step={1}
-            min={0}
+            min={1}
             marks
-            max={steps ? steps.length - 1 : 1}
+            max={sortingSteps ? sortingSteps.length - 1 : 1}
             onChange={(e, v) => {
-              dispatch(SortingSlice.incrementStep());
+              dispatch(Slice.actions.nextStep());
             }}
           />
         </div>

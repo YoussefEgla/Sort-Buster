@@ -1,8 +1,7 @@
 import React from "react";
 import * as Material from "@material-ui/core";
 import * as ReactRedux from "react-redux";
-import * as GeneralSlice from "../store/GeneralSlice";
-import { GeneralState } from "../store/GeneralSlice";
+import { GeneralState, method, actions } from "../store/Slice";
 
 interface NavTabProps {
   value: GeneralState["method"];
@@ -11,7 +10,7 @@ interface NavTabProps {
 
 export function NavTab(props: NavTabProps) {
   const dispatch = ReactRedux.useDispatch(),
-    currentMethod = ReactRedux.useSelector(GeneralSlice.currentMethod),
+    currentMethod = ReactRedux.useSelector(method),
     text =
       currentMethod === props.value
         ? props.value.replace(/SORT/, "").trim()
@@ -20,7 +19,7 @@ export function NavTab(props: NavTabProps) {
   return (
     <Material.Tab
       label={text}
-      onClick={() => dispatch(GeneralSlice.setMethod(props.value))}
+      onClick={() => dispatch(actions.setMethod(props.value))}
     />
   );
 }

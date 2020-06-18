@@ -101,3 +101,12 @@ export function bubbleSort(arr: DATA_SET): SORTING_STEPS {
 
   return steps;
 }
+
+export function generateSteps(method: SORTING_METHOD) {
+  switch (method) {
+    case "BUBBLE SORT":
+      return bubbleSort;
+    default:
+      return bubbleSort;
+  }
+}

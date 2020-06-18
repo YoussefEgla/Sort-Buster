@@ -1,7 +1,7 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
 import * as Material from "@material-ui/core";
-import * as GeneralSlice from "../store/GeneralSlice";
+import { actions } from "../store/Slice";
 
 export function Create() {
   const dispatch = ReactRedux.useDispatch();
@@ -19,21 +19,21 @@ export function Create() {
         }}
       >
         <Material.Button
-          onClick={() => dispatch(GeneralSlice.createRandom({}))}
+          onClick={() => dispatch(actions.create({ type: "RANDOM" }))}
           variant="contained"
           color="primary"
         >
           Random set
         </Material.Button>
         <Material.Button
-          onClick={() => dispatch(GeneralSlice.createNearlySorted({}))}
+          onClick={() => dispatch(actions.create({ type: "NEARLY SORTED" }))}
           variant="contained"
           color="primary"
         >
           Nearly Sorted
         </Material.Button>
         <Material.Button
-          onClick={() => dispatch(GeneralSlice.createSorted({}))}
+          onClick={() => dispatch(actions.create({ type: "SORTED" }))}
           variant="contained"
           color="primary"
         >
@@ -59,7 +59,9 @@ export function Create() {
         <div style={{ margin: "auto 0" }}>
           <Material.Button
             onClick={() =>
-              dispatch(GeneralSlice.createUserDefined(createInput))
+              dispatch(
+                actions.create({ type: "USER DEFINED", data: createInput })
+              )
             }
             variant="contained"
             color="primary"

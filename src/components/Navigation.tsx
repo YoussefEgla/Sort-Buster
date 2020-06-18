@@ -1,11 +1,11 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
 import * as Material from "@material-ui/core";
-import * as GeneralState from "../store/GeneralSlice";
+import * as ReduxSlice from "../store/Slice";
 import { NavTab } from "./NavTab";
 
 export function Navigation() {
-  const currentMethod = ReactRedux.useSelector(GeneralState.currentMethod);
+  const currentMethod = ReactRedux.useSelector(ReduxSlice.method);
 
   const classes = useStyles();
 
