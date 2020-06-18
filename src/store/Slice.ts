@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction, Actions } from "@reduxjs/toolkit";
 import * as utils from "./utils";
-import { RootState } from ".";
+import { RootState, AppThunk } from ".";
 
 export interface GeneralState {
   method: SORTING_METHOD;
   dataSet: DATA_SET;
-  sortingSteps: SORTING_STEPS | null;
+  sortingSteps: SORTING_STEPS;
   currentStep: number;
   areStepsDone: boolean;
-  playSpeed: number;
-  pause: NodeJS.Timeout | 0;
+  interval: NodeJS.Timeout | 0;
+  playback: "PLAYING" | "PAUSED";
+  speed: number;
 }
 
 const initialDataSet = utils.prepareDataSet(utils.randomSet());
@@ -20,8 +21,9 @@ const initialState: GeneralState = {
   sortingSteps: utils.generateSteps("BUBBLE SORT")(initialDataSet),
   currentStep: 0,
   areStepsDone: false,
-  playSpeed: 1000,
-  pause: 0,
+  interval: 0,
+  playback: "PAUSED",
+  speed: 1000,
 };
 
 const generalSlice = createSlice({
@@ -40,6 +42,10 @@ const generalSlice = createSlice({
     // Create action
     //
     create(state, action: PayloadAction<CREATE>) {
+      clearInterval(state.interval as NodeJS.Timeout);
+      state.playback = "PAUSED";
+      state.interval = 0;
+
       switch (action.payload.type) {
         case "RANDOM": {
           const { len, maxValue } = action.payload;
@@ -88,6 +94,9 @@ const generalSlice = createSlice({
         state.currentStep += 1;
       } else {
         state.areStepsDone = true;
+        state.playback = "PAUSED";
+        clearInterval(state.interval as NodeJS.Timeout);
+        state.interval = 0;
       }
     },
     prevStep(state) {
@@ -99,14 +108,15 @@ const generalSlice = createSlice({
     //
     // Play / Pause
     //
-    play(state) {
-      state.pause = setInterval(() => {
-        this.nextStep(state);
-      }, state.playSpeed);
+    play(state, action: PayloadAction<NodeJS.Timeout>) {
+      state.interval = action.payload;
+      state.playback = "PLAYING";
     },
     pause(state) {
-      if (state.pause) {
-        clearInterval(state.pause);
+      if (state.playback === "PLAYING") {
+        clearInterval(state.interval as NodeJS.Timeout);
+        state.interval = 0;
+        state.playback = "PAUSED";
       }
     },
     //
@@ -127,6 +137,23 @@ const generalSlice = createSlice({
   },
 });
 
+const playAsync = (): AppThunk => (dispatch, state) => {
+  const rootState = state();
+
+  if (
+    rootState.general.playback === "PAUSED" &&
+    rootState.general.interval === 0 &&
+    rootState.general.sortingSteps.length > 1
+  ) {
+    console.log("Hello");
+
+    const interval = setInterval(() => {
+      dispatch(actions.nextStep());
+    }, rootState.general.speed);
+    dispatch(actions.play(interval));
+  }
+};
+
 //
 // Reducer
 //
@@ -135,7 +162,7 @@ export default generalSlice.reducer;
 //
 // Actions
 //
-export const actions = generalSlice.actions;
+export const actions = { ...generalSlice.actions, playAsync };
 
 //
 // Selectors
@@ -145,3 +172,4 @@ export const dataSet = (state: RootState) => state.general.dataSet;
 export const sortingSteps = (state: RootState) => state.general.sortingSteps;
 export const currentStep = (state: RootState) => state.general.currentStep;
 export const areStepsDone = (state: RootState) => state.general.areStepsDone;
+export const playback = (state: RootState) => state.general.playback;

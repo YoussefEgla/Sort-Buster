@@ -3,6 +3,12 @@ import * as ReactRedux from "react-redux";
 import * as Slice from "../store/Slice";
 import * as Material from "@material-ui/core";
 
+//
+// Icons
+//
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PauseIcon from "@material-ui/icons/Pause";
+
 function Slider() {
   const dispatch = ReactRedux.useDispatch();
 
@@ -12,11 +18,8 @@ function Slider() {
   return (
     <Material.Slider
       value={currentStep}
-      min={0}
-      max={sortingSteps ? sortingSteps.length - 1 : 1}
-      onChange={(e, v) => {
-        dispatch(Slice.actions.nextStep());
-      }}
+      min={sortingSteps.length === 1 ? 1 : 0}
+      max={sortingSteps.length - 1}
     />
   );
 }
@@ -24,6 +27,8 @@ function Slider() {
 export function Sort() {
   const classes = useStyles();
   const dispatch = ReactRedux.useDispatch();
+
+  const playbackState = ReactRedux.useSelector(Slice.playback);
 
   return (
     <React.Fragment>
@@ -47,6 +52,18 @@ export function Sort() {
         <Material.ButtonGroup size="small" aria-label="Control Sorting">
           <Material.Button onClick={() => dispatch(Slice.actions.prevStep())}>
             Prev Step
+          </Material.Button>
+          <Material.Button
+            aria-label={playbackState === "PLAYING" ? "PAUSE" : "PLAY"}
+            onClick={() => {
+              if (playbackState === "PAUSED") {
+                dispatch(Slice.actions.playAsync());
+              } else {
+                dispatch(Slice.actions.pause());
+              }
+            }}
+          >
+            {playbackState === "PAUSED" ? <PlayArrowIcon /> : <PauseIcon />}
           </Material.Button>
           <Material.Button onClick={() => dispatch(Slice.actions.nextStep())}>
             Next Step
