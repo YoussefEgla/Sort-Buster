@@ -23,3 +23,11 @@ type CREATE =
   | CREATE_SORTED
   | CREATE_NEARLY_SORTED
   | CREATE_USER_DEFINED;
+
+//
+// STEP ACTIONS
+//
+type STEP_FORWARD = { type: "STEP FORWARD" };
+type STEP_BACKWARD = { type: "STEP BACKWARD" };
+type STEP_TO = { type: "STEP TO"; index: number };
+type STEP = STEP_FORWARD | STEP_BACKWARD | STEP_TO;

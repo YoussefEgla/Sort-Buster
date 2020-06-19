@@ -9,7 +9,7 @@ export interface GeneralState {
   currentStep: number;
   areStepsDone: boolean;
   interval: NodeJS.Timeout | 0;
-  playback: "PLAYING" | "PAUSED";
+  playback: "PLAYING" | "PAUSED" | "FINISHED";
   speed: number;
 }
 
@@ -23,7 +23,7 @@ const initialState: GeneralState = {
   areStepsDone: false,
   interval: 0,
   playback: "PAUSED",
-  speed: 5,
+  speed: 50,
 };
 
 const generalSlice = createSlice({
@@ -86,27 +86,36 @@ const generalSlice = createSlice({
     //
     // Step through actions
     //
-    nextStep(state) {
-      if (
-        state.sortingSteps &&
-        state.currentStep < state.sortingSteps.length - 1
-      ) {
-        state.currentStep += 1;
-      } else {
-        state.areStepsDone = true;
-        state.playback = "PAUSED";
-        clearInterval(state.interval as NodeJS.Timeout);
-        state.interval = 0;
+    step(state, action: PayloadAction<STEP>) {
+      switch (action.payload.type) {
+        case "STEP FORWARD": {
+          if (state.currentStep < state.sortingSteps.length - 1) {
+            state.currentStep += 1;
+          } else {
+            state.areStepsDone = true;
+            state.playback = "FINISHED";
+            clearInterval(state.interval as NodeJS.Timeout);
+            state.interval = 0;
+          }
+
+          break;
+        }
+
+        case "STEP BACKWARD": {
+          if (state.sortingSteps && state.currentStep > 0) {
+            state.currentStep -= 1;
+            state.areStepsDone = false;
+          }
+
+          break;
+        }
+
+        case "STEP TO": {
+          state.currentStep = action.payload.index;
+
+          break;
+        }
       }
-    },
-    prevStep(state) {
-      if (state.sortingSteps && state.currentStep > 0) {
-        state.currentStep -= 1;
-        state.areStepsDone = false;
-      }
-    },
-    goToStep(state, action: PayloadAction<number>) {
-      state.currentStep = action.payload;
     },
     //
     // Play / Pause
@@ -122,20 +131,8 @@ const generalSlice = createSlice({
         state.playback = "PAUSED";
       }
     },
-    //
-    // Generate Sorting Steps
-    //
-    sort(state) {
-      if (
-        (state.sortingSteps === null ||
-          state.dataSet !== state.sortingSteps[0]) &&
-        !state.areStepsDone
-      ) {
-        switch (state.method) {
-          case "BUBBLE SORT":
-            state.sortingSteps = utils.bubbleSort(state.dataSet);
-        }
-      }
+    changeSpeed(state, action: PayloadAction<number>) {
+      state.speed = action.payload;
     },
   },
 });
@@ -148,10 +145,8 @@ const playAsync = (): AppThunk => (dispatch, state) => {
     rootState.general.interval === 0 &&
     rootState.general.sortingSteps.length > 1
   ) {
-    console.log("Hello");
-
     const interval = setInterval(() => {
-      dispatch(actions.nextStep());
+      dispatch(actions.step({ type: "STEP FORWARD" }));
     }, rootState.general.speed);
     dispatch(actions.play(interval));
   }
@@ -176,3 +171,4 @@ export const sortingSteps = (state: RootState) => state.general.sortingSteps;
 export const currentStep = (state: RootState) => state.general.currentStep;
 export const areStepsDone = (state: RootState) => state.general.areStepsDone;
 export const playback = (state: RootState) => state.general.playback;
+export const playSpeed = (state: RootState) => state.general.speed;

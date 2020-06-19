@@ -8,8 +8,9 @@ import * as Material from "@material-ui/core";
 //
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
+import ReplayIcon from "@material-ui/icons/Replay";
 
-function Slider() {
+function ProgressSlider() {
   const dispatch = ReactRedux.useDispatch();
 
   const sortingSteps = ReactRedux.useSelector(Slice.sortingSteps);
@@ -21,8 +22,34 @@ function Slider() {
       min={sortingSteps.length === 1 ? 1 : 0}
       max={sortingSteps.length - 1}
       onChange={(e, v) => {
-        dispatch(Slice.actions.goToStep(typeof v === "number" ? v : v[0]));
+        dispatch(
+          Slice.actions.step({
+            type: "STEP TO",
+            index: typeof v === "number" ? v : v[0],
+          })
+        );
       }}
+    />
+  );
+}
+
+function SpeedSlider() {
+  const dispatch = ReactRedux.useDispatch();
+
+  const currentSpeed = ReactRedux.useSelector(Slice.playSpeed);
+
+  return (
+    <Material.Slider
+      min={5}
+      max={500}
+      step={5}
+      value={currentSpeed}
+      track="inverted"
+      marks
+      onChange={(e, v) => {
+        dispatch(Slice.actions.changeSpeed(typeof v === "number" ? v : v[0]));
+      }}
+      valueLabelDisplay="auto"
     />
   );
 }
@@ -36,13 +63,7 @@ export function Sort() {
   return (
     <React.Fragment>
       <div className={classes.topContainer}>
-        <Material.Button
-          variant="contained"
-          color="primary"
-          onClick={() => dispatch(Slice.actions.sort())}
-        >
-          Sort
-        </Material.Button>
+        <SpeedSlider />
       </div>
 
       <Material.Divider />
@@ -50,10 +71,14 @@ export function Sort() {
       <div className={classes.bottomContainer}>
         <div className={classes.slider}>
           <Material.Typography>Progress</Material.Typography>
-          <Slider />
+          <ProgressSlider />
         </div>
         <Material.ButtonGroup size="small" aria-label="Control Sorting">
-          <Material.Button onClick={() => dispatch(Slice.actions.prevStep())}>
+          <Material.Button
+            onClick={() =>
+              dispatch(Slice.actions.step({ type: "STEP BACKWARD" }))
+            }
+          >
             Prev Step
           </Material.Button>
           <Material.Button
@@ -66,9 +91,19 @@ export function Sort() {
               }
             }}
           >
-            {playbackState === "PAUSED" ? <PlayArrowIcon /> : <PauseIcon />}
+            {playbackState === "PAUSED" ? (
+              <PlayArrowIcon />
+            ) : playbackState === "PLAYING" ? (
+              <PauseIcon />
+            ) : (
+              <ReplayIcon />
+            )}
           </Material.Button>
-          <Material.Button onClick={() => dispatch(Slice.actions.nextStep())}>
+          <Material.Button
+            onClick={() =>
+              dispatch(Slice.actions.step({ type: "STEP FORWARD" }))
+            }
+          >
             Next Step
           </Material.Button>
         </Material.ButtonGroup>
@@ -81,13 +116,12 @@ const useStyles = Material.makeStyles((theme: Material.Theme) => ({
   topContainer: {
     display: "flex",
     justifyContent: "space-between",
-    width: "100%",
+    width: "75%",
     margin: "0 auto 25px auto",
   },
   bottomContainer: {
     display: "flex",
     flexDirection: "column",
-    // justifyContent: "space-between",
     alignItems: "center",
     width: "75%",
     margin: "25px auto 0 auto",
