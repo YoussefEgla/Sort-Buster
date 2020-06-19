@@ -19,6 +19,8 @@ export function prepareDataSet(arr: number[]): DATA_SET {
   return arr.map((v, i) => ({
     value: v,
     id: uuid.v4(),
+    active: false,
+    done: false,
   }));
 }
 
@@ -80,56 +82,81 @@ export function bubbleSort(arr: DATA_SET): SORTING_STEPS {
     swapped = false;
 
     for (let i = 0; i < n; i++) {
-      if (currentArr[i].value > currentArr[i + 1].value) {
+      let newArr = [...currentArr];
+
+      // highlight nodes that will be compared
+      let first: DATA_POINT = { ...newArr[i], active: true };
+      let second: DATA_POINT = { ...newArr[i + 1], active: true };
+
+      newArr[i] = first;
+      newArr[i + 1] = second;
+      steps.push(newArr);
+
+      newArr = [...currentArr];
+
+      if (currentArr[i]["value"] > currentArr[i + 1]["value"]) {
         // make a new copy of the current array
-        let newArr = [...currentArr];
 
         // swap the values of the new copy
         [newArr[i], newArr[i + 1]] = [newArr[i + 1], newArr[i]];
 
-        // push the new copy as a step
-        steps.push(newArr);
-
-        // make the currentArr variable = newArr
-        currentArr = newArr;
-
         swapped = true;
       }
+
+      // push the new copy as a step
+      steps.push(newArr);
+
+      // make the currentArr variable = newArr
+      currentArr = newArr;
     }
+
+    let newArr = [...currentArr];
+    newArr[n] = { ...newArr[n], done: true };
+    steps.push(newArr);
+    currentArr = newArr;
+
     n--;
   } while (swapped);
 
-  selection([...arr]);
   return steps;
 }
 
 export function selection(arr: DATA_SET): SORTING_STEPS {
   const steps = [arr];
 
-  let currentArr = arr;
+  let currentArr = [...arr];
 
   for (let i = 0; i < arr.length; i++) {
     let lowest = i;
 
     for (let j = i + 1; j < arr.length; j++) {
-      if (currentArr[lowest].value > currentArr[j].value) {
+      let newArr = [...currentArr];
+      newArr[lowest] = { ...newArr[lowest], active: true };
+      newArr[j] = { ...newArr[j], active: true };
+      steps.push(newArr);
+
+      if (currentArr[lowest]["value"] > currentArr[j]["value"]) {
+        let newArr2 = [...newArr];
+        newArr2[lowest] = { ...newArr2[lowest], active: false };
+        steps.push(newArr2);
+
         lowest = j;
       }
     }
-
     if (i !== lowest) {
-      // make new copy
       let newArr = [...currentArr];
+      newArr[lowest] = { ...newArr[lowest], done: true };
 
-      // swap the values of the new copy
-      [newArr[lowest], newArr[i]] = [newArr[i], newArr[lowest]];
-
-      // push the new copy to steps
+      [newArr[i], newArr[lowest]] = [newArr[lowest], newArr[i]];
       steps.push(newArr);
 
-      // set current arr as new arr
       currentArr = newArr;
     }
+
+    let newArr = [...currentArr];
+    newArr[i] = { ...newArr[i], done: true };
+    steps.push(newArr);
+    currentArr = newArr;
   }
 
   return steps;
@@ -145,7 +172,7 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
 
     let j = i - 1;
 
-    while (j >= 0 && currentArr[j].value > current.value) {
+    while (j >= 0 && currentArr[j]["value"] > current["value"]) {
       let newArr = [...currentArr];
 
       [newArr[j + 1], newArr[j]] = [newArr[j], newArr[j + 1]];
@@ -164,7 +191,6 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
 }
 
 export function generateSteps(method: SORTING_METHOD) {
-  console.log("GENERATING STEPS");
   switch (method) {
     case "BUBBLE SORT":
       return bubbleSort;

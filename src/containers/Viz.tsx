@@ -31,6 +31,8 @@ export function Viz() {
       x={i * 25}
       value={v.value}
       key={v.id}
+      active={v.active}
+      done={v.done}
     />
   ));
 

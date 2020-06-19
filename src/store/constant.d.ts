@@ -23,5 +23,11 @@ type SORTING_METHOD =
   | COUNTING_SORT
   | RADIX_SORT;
 
-type DATA_SET = { value: number; id: string }[];
+type DATA_POINT = {
+  value: number;
+  id: string;
+  active: boolean;
+  done: boolean;
+};
+type DATA_SET = DATA_POINT[];
 type SORTING_STEPS = DATA_SET[];

@@ -10,6 +10,8 @@ interface BarProps {
    */
   x: number;
   value: number;
+  active: boolean;
+  done: boolean;
 }
 
 export function Bar(props: BarProps) {
@@ -21,7 +23,7 @@ export function Bar(props: BarProps) {
         x={`${x}px`}
         width="24px"
         transform="scale(1, -1) translate(0, -200)"
-        // fill={props.done ? "#3f51b5" : props.active ? "#f50057" : "black"}
+        fill={props.done ? "#3f51b5" : props.active ? "#f50057" : "black"}
       />
       <text
         fill="green"
