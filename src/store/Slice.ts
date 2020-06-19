@@ -131,6 +131,11 @@ const generalSlice = createSlice({
         state.playback = "PAUSED";
       }
     },
+    resetPlay(state) {
+      state.currentStep = 0;
+      state.areStepsDone = false;
+      state.playback = "PAUSED";
+    },
     changeSpeed(state, action: PayloadAction<number>) {
       state.speed = action.payload;
     },

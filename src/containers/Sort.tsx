@@ -86,6 +86,9 @@ export function Sort() {
             onClick={() => {
               if (playbackState === "PAUSED") {
                 dispatch(Slice.actions.playAsync());
+              } else if (playbackState === "FINISHED") {
+                dispatch(Slice.actions.resetPlay());
+                dispatch(Slice.actions.playAsync());
               } else {
                 dispatch(Slice.actions.pause());
               }
