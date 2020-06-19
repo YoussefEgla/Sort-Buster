@@ -9,6 +9,10 @@ import * as Material from "@material-ui/core";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import ReplayIcon from "@material-ui/icons/Replay";
+import FastRewindIcon from "@material-ui/icons/FastRewind";
+import FastForwardIcon from "@material-ui/icons/FastForward";
+import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
+import SkipNextIcon from "@material-ui/icons/SkipNext";
 
 function ProgressSlider() {
   const dispatch = ReactRedux.useDispatch();
@@ -74,12 +78,15 @@ export function Sort() {
           <ProgressSlider />
         </div>
         <Material.ButtonGroup size="small" aria-label="Control Sorting">
+          <Material.Button>
+            <FastRewindIcon />
+          </Material.Button>
           <Material.Button
             onClick={() =>
               dispatch(Slice.actions.step({ type: "STEP BACKWARD" }))
             }
           >
-            Prev Step
+            <SkipPreviousIcon />
           </Material.Button>
           <Material.Button
             aria-label={playbackState === "PLAYING" ? "PAUSE" : "PLAY"}
@@ -107,7 +114,10 @@ export function Sort() {
               dispatch(Slice.actions.step({ type: "STEP FORWARD" }))
             }
           >
-            Next Step
+            <SkipNextIcon />
+          </Material.Button>
+          <Material.Button>
+            <FastForwardIcon />
           </Material.Button>
         </Material.ButtonGroup>
       </div>

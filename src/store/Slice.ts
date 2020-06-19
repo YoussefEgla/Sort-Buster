@@ -37,6 +37,10 @@ const generalSlice = createSlice({
       state.method = action.payload;
       state.sortingSteps = utils.generateSteps(state.method)(state.dataSet);
       state.currentStep = 0;
+
+      if (state.playback === "FINISHED") {
+        state.playback = "PAUSED";
+      }
     },
     //
     // Create action
