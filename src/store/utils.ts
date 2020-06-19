@@ -99,13 +99,49 @@ export function bubbleSort(arr: DATA_SET): SORTING_STEPS {
     n--;
   } while (swapped);
 
+  selection([...arr]);
+  return steps;
+}
+
+export function selection(arr: DATA_SET): SORTING_STEPS {
+  const steps = [arr];
+
+  let currentArr = arr;
+
+  for (let i = 0; i < arr.length; i++) {
+    let lowest = i;
+
+    for (let j = i + 1; j < arr.length; j++) {
+      if (currentArr[lowest].value > currentArr[j].value) {
+        lowest = j;
+      }
+    }
+
+    if (i !== lowest) {
+      // make new copy
+      let newArr = [...currentArr];
+
+      // swap the values of the new copy
+      [newArr[lowest], newArr[i]] = [newArr[i], newArr[lowest]];
+
+      // push the new copy to steps
+      steps.push(newArr);
+
+      // set current arr as new arr
+      currentArr = newArr;
+    }
+  }
+
   return steps;
 }
 
 export function generateSteps(method: SORTING_METHOD) {
+  console.log("GENERATING STEPS");
   switch (method) {
     case "BUBBLE SORT":
       return bubbleSort;
+    case "SELECTION SORT":
+      return selection;
     default:
       return bubbleSort;
   }

@@ -23,7 +23,7 @@ const initialState: GeneralState = {
   areStepsDone: false,
   interval: 0,
   playback: "PAUSED",
-  speed: 1000,
+  speed: 5,
 };
 
 const generalSlice = createSlice({
