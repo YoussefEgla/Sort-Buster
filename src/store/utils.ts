@@ -35,7 +35,7 @@ export function randomNum(max: number, min = -1) {
  * Generate Random Array of numbers
  */
 export function randomSet(len?: number, maxValue?: number): number[] {
-  return Array.from({ length: len || randomNum(35, 2) }).map(() =>
+  return Array.from({ length: len || randomNum(50, 2) }).map(() =>
     randomNum(maxValue || 500)
   );
 }
@@ -118,6 +118,8 @@ export function bubbleSort(arr: DATA_SET): SORTING_STEPS {
     n--;
   } while (swapped);
 
+  steps.push(currentArr.map((v) => ({ ...v, done: true })));
+
   return steps;
 }
 
@@ -168,21 +170,42 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
   let currentArr = arr;
 
   for (let i = 1; i < arr.length; i++) {
-    let current = currentArr[i];
-
     let j = i - 1;
 
-    while (j >= 0 && currentArr[j]["value"] > current["value"]) {
+    let newArr = [...currentArr];
+    newArr[i] = { ...newArr[i], active: true };
+    newArr[j] = { ...newArr[j], active: true };
+    steps.push(newArr);
+
+    currentArr = newArr;
+
+    let current = currentArr[i];
+
+    if (currentArr[j]["value"] > current["value"]) {
       let newArr = [...currentArr];
-
-      [newArr[j + 1], newArr[j]] = [newArr[j], newArr[j + 1]];
-
+      newArr[i] = { ...newArr[i], active: false };
       steps.push(newArr);
-
       currentArr = newArr;
 
-      j--;
+      while (j >= 0 && currentArr[j]["value"] > current["value"]) {
+        let newArr = [...currentArr];
+
+        [newArr[j + 1], newArr[j]] = [newArr[j], newArr[j + 1]];
+
+        steps.push(newArr);
+
+        currentArr = newArr;
+
+        j--;
+      }
     }
+
+    newArr = [...currentArr];
+    newArr[j] = { ...newArr[j], active: false };
+    // newArr[i] = { ...newArr[i], active: false };
+
+    steps.push(newArr);
+    currentArr = newArr;
 
     current = currentArr[j + 1];
   }
