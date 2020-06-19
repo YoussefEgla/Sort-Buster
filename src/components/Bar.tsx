@@ -23,13 +23,18 @@ export function Bar(props: BarProps) {
         x={`${x}px`}
         width="24px"
         transform="scale(1, -1) translate(0, -200)"
-        fill={props.done ? "#3f51b5" : props.active ? "#f50057" : "black"}
+        fill={
+          props.done
+            ? "#3f51b5"
+            : props.active
+            ? "#f50057"
+            : "rgba(0, 0, 0, 0.12)"
+        }
       />
       <text
-        fill="green"
+        fill="rgba(0, 0, 0, 0.5)"
         fontSize="11"
         x={`${x + 5}px`}
-        // transform="scale(0, -1) translate(0, -200)"
         y={`189`}
         fontFamily="serif"
       >
