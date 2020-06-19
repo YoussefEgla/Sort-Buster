@@ -172,18 +172,23 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
   for (let i = 1; i < arr.length; i++) {
     let j = i - 1;
 
+    // copying to new array
     let newArr = [...currentArr];
+
+    // modifying value and setting current
     newArr[i] = { ...newArr[i], active: true };
-    newArr[j] = { ...newArr[j], active: true };
+    let current = newArr[i];
+
+    // pushing a step
     steps.push(newArr);
 
+    // setting workable array
     currentArr = newArr;
-
-    let current = currentArr[i];
 
     if (currentArr[j]["value"] > current["value"]) {
       let newArr = [...currentArr];
-      newArr[i] = { ...newArr[i], active: false };
+      newArr[j + 1] = { ...newArr[j + 1], active: true };
+      newArr[j] = { ...newArr[j], active: true };
       steps.push(newArr);
       currentArr = newArr;
 
@@ -197,17 +202,30 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
         currentArr = newArr;
 
         j--;
+        if (j < 0 || currentArr[j]["value"] <= current["value"]) {
+          newArr = [...currentArr];
+          newArr[j + 1] = { ...newArr[j + 1], active: false };
+          steps.push(newArr);
+          currentArr = newArr;
+        }
       }
     }
 
+    // making a copy
     newArr = [...currentArr];
-    newArr[j] = { ...newArr[j], active: false };
-    // newArr[i] = { ...newArr[i], active: false };
 
+    // modifying value of current to be false
+    newArr[i] = { ...newArr[i], active: false };
     steps.push(newArr);
     currentArr = newArr;
-
     current = currentArr[j + 1];
+  }
+
+  for (let i = 0; i < currentArr.length; i++) {
+    let newArr = [...currentArr];
+    newArr[i] = { ...newArr[i], done: true };
+    steps.push(newArr);
+    currentArr = newArr;
   }
 
   return steps;
