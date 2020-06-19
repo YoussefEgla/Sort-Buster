@@ -135,13 +135,46 @@ export function selection(arr: DATA_SET): SORTING_STEPS {
   return steps;
 }
 
+export function insertion(arr: DATA_SET): SORTING_STEPS {
+  const steps = [arr];
+
+  let currentArr = arr;
+
+  for (let i = 1; i < arr.length; i++) {
+    let current = currentArr[i];
+
+    let j = i - 1;
+
+    while (j >= 0 && currentArr[j].value > current.value) {
+      let newArr = [...currentArr];
+
+      [newArr[j + 1], newArr[j]] = [newArr[j], newArr[j + 1]];
+
+      steps.push(newArr);
+
+      currentArr = newArr;
+
+      j--;
+    }
+
+    current = currentArr[j + 1];
+  }
+
+  return steps;
+}
+
 export function generateSteps(method: SORTING_METHOD) {
   console.log("GENERATING STEPS");
   switch (method) {
     case "BUBBLE SORT":
       return bubbleSort;
+
     case "SELECTION SORT":
       return selection;
+
+    case "INSERTION SORT":
+      return insertion;
+
     default:
       return bubbleSort;
   }
