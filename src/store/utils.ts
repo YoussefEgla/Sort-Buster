@@ -293,7 +293,7 @@ function mergeSort(arr: DATA_SET): SORTING_STEPS {
   }
 
   // return sorted;
-  steps.push(sorted);
+  steps.push(sorted.map((v) => ({ ...v, done: true })));
   return steps;
 }
 
