@@ -196,6 +196,7 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
         let newArr = [...currentArr];
 
         [newArr[j + 1], newArr[j]] = [newArr[j], newArr[j + 1]];
+        newArr[j + 1] = { ...newArr[j + 1], active: false, done: true };
 
         steps.push(newArr);
 
@@ -204,7 +205,7 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
         j--;
         if (j < 0 || currentArr[j]["value"] <= current["value"]) {
           newArr = [...currentArr];
-          newArr[j + 1] = { ...newArr[j + 1], active: false };
+          newArr[j + 1] = { ...newArr[j + 1], active: false, done: true };
           steps.push(newArr);
           currentArr = newArr;
         }
@@ -221,12 +222,7 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
     current = currentArr[j + 1];
   }
 
-  for (let i = 0; i < currentArr.length; i++) {
-    let newArr = [...currentArr];
-    newArr[i] = { ...newArr[i], done: true };
-    steps.push(newArr);
-    currentArr = newArr;
-  }
+  steps.push(currentArr.map((v, i) => (v.done ? v : { ...v, done: true })));
 
   return steps;
 }
