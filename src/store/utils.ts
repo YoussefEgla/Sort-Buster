@@ -230,6 +230,39 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
   return steps;
 }
 
+export function mergeSort(arr: DATA_SET): DATA_SET {
+  // Edge case
+  if (arr.length <= 1) return [...arr];
+
+  let currentArr = [...arr];
+
+  // Dividing Part
+  let mid = Math.floor(currentArr.length / 2);
+  let left = mergeSort(currentArr.slice(0, mid));
+  let right = mergeSort(currentArr.slice(mid));
+
+  // Merging Part
+  const merge = (a: DATA_SET, b: DATA_SET) => {
+    let sorted: DATA_SET = [];
+
+    let currentA = [...a];
+    let currentB = [...b];
+
+    // Loop while length are not equal 0
+    while (a.length && b.length) {
+      if (currentA[0]["value"] < currentB[0]["value"]) {
+        sorted.push(currentA.shift() as DATA_POINT);
+      } else {
+        sorted.push(currentB.shift() as DATA_POINT);
+      }
+    }
+
+    return sorted.concat(...currentA, ...currentB);
+  };
+
+  return merge(left, right);
+}
+
 export function generateSteps(method: SORTING_METHOD) {
   switch (method) {
     case "BUBBLE SORT":
