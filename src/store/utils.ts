@@ -232,45 +232,52 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
 
 /**
  * Merge Sort
+ *
+ *
+ * MUST BE SOLVED WITH BOTTOM UP
  */
-function mergeSteps(input: DATA_SET): SORTING_STEPS {
-  const steps = [input];
+function mergeSort(arr: DATA_SET): SORTING_STEPS {
+  const steps = [arr];
+  let sorted = arr.slice();
+  let n = sorted.length;
+  let buffer = new Array(n);
 
-  const finalStep = mergeSort(input);
-  function mergeSort(arr: DATA_SET): DATA_SET {
-    // Edge case
-    if (arr.length <= 1) return [...arr];
+  for (var size = 1; size < n; size *= 2) {
+    for (var leftStart = 0; leftStart < n; leftStart += 2 * size) {
+      let left = leftStart;
+      let right = Math.min(left + size, n);
+      let leftLimit = right;
+      let rightLimit = Math.min(right + size, n);
 
-    let currentArr = [...arr];
-
-    // Dividing Part
-    let mid = Math.floor(currentArr.length / 2);
-    let left = mergeSort(currentArr.slice(0, mid));
-    let right = mergeSort(currentArr.slice(mid));
-
-    // Merging Part
-    const merge = (a: DATA_SET, b: DATA_SET) => {
-      let sorted: DATA_SET = [];
-
-      // Loop while length are not equal 0
-      while (a.length && b.length) {
-        if (a[0]["value"] < b[0]["value"]) {
-          sorted.push(a.shift() as DATA_POINT);
+      let i = left;
+      while (left < leftLimit && right < rightLimit) {
+        if (sorted[left]["value"] <= sorted[right]["value"]) {
+          buffer[i++] = sorted[left++];
         } else {
-          sorted.push(b.shift() as DATA_POINT);
+          buffer[i++] = sorted[right++];
         }
       }
+      while (left < leftLimit) {
+        buffer[i++] = sorted[left++];
+      }
+      while (right < rightLimit) {
+        buffer[i++] = sorted[right++];
+      }
+    }
 
-      return sorted.concat(...a, ...b);
-    };
-
-    return merge(left, right);
+    var temp = sorted;
+    sorted = buffer;
+    buffer = temp;
   }
 
-  steps.push(finalStep);
+  // return sorted;
+  steps.push(sorted);
   return steps;
 }
 
+/**
+ *  Gnerate steps function
+ */
 export function generateSteps(method: SORTING_METHOD) {
   switch (method) {
     case "BUBBLE SORT":
@@ -283,7 +290,7 @@ export function generateSteps(method: SORTING_METHOD) {
       return insertion;
 
     case "MERGE SORT":
-      return mergeSteps;
+      return mergeSort;
 
     default:
       return bubbleSort;
