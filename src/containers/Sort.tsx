@@ -63,6 +63,7 @@ export function Sort() {
   const dispatch = ReactRedux.useDispatch();
 
   const playbackState = ReactRedux.useSelector(Slice.playback);
+  const totalSteps = ReactRedux.useSelector(Slice.sortingSteps).length - 1;
 
   return (
     <React.Fragment>
@@ -78,7 +79,11 @@ export function Sort() {
           <ProgressSlider />
         </div>
         <Material.ButtonGroup size="small" aria-label="Control Sorting">
-          <Material.Button>
+          <Material.Button
+            onClick={() => {
+              dispatch(Slice.actions.step({ type: "STEP TO", index: 0 }));
+            }}
+          >
             <FastRewindIcon />
           </Material.Button>
           <Material.Button
@@ -117,7 +122,13 @@ export function Sort() {
             <SkipNextIcon />
           </Material.Button>
           <Material.Button>
-            <FastForwardIcon />
+            <FastForwardIcon
+              onClick={() => {
+                dispatch(
+                  Slice.actions.step({ type: "STEP TO", index: totalSteps })
+                );
+              }}
+            />
           </Material.Button>
         </Material.ButtonGroup>
       </div>
