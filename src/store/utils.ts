@@ -240,7 +240,7 @@ function mergeSort(arr: DATA_SET): SORTING_STEPS {
   const steps = [arr];
   let sorted = arr.slice();
   let n = sorted.length;
-  let buffer = new Array(n);
+  let buffer = [...arr];
 
   for (var size = 1; size < n; size *= 2) {
     for (var leftStart = 0; leftStart < n; leftStart += 2 * size) {
@@ -252,22 +252,44 @@ function mergeSort(arr: DATA_SET): SORTING_STEPS {
       let i = left;
       while (left < leftLimit && right < rightLimit) {
         if (sorted[left]["value"] <= sorted[right]["value"]) {
-          buffer[i++] = sorted[left++];
+          let currentArr = [...sorted];
+          currentArr[left] = { ...currentArr[left], active: true };
+          steps.push(currentArr);
+          currentArr = [...sorted];
+          steps.push(currentArr);
+
+          buffer[i++] = currentArr[left++];
         } else {
+          let currentArr = [...sorted];
+          currentArr[right] = { ...currentArr[right], active: true };
+          steps.push(currentArr);
+          currentArr = [...sorted];
+          steps.push(currentArr);
+
           buffer[i++] = sorted[right++];
         }
       }
       while (left < leftLimit) {
+        let currentArr = [...sorted];
+        currentArr[left] = { ...currentArr[left], active: true };
+        steps.push(currentArr);
+        currentArr = [...sorted];
+        steps.push(currentArr);
+
         buffer[i++] = sorted[left++];
       }
       while (right < rightLimit) {
+        let currentArr = [...sorted];
+        currentArr[right] = { ...currentArr[right], active: true };
+        steps.push(currentArr);
+        currentArr = [...sorted];
+        steps.push(currentArr);
+
         buffer[i++] = sorted[right++];
       }
     }
 
-    var temp = sorted;
-    sorted = buffer;
-    buffer = temp;
+    [sorted, buffer] = [buffer, sorted];
   }
 
   // return sorted;
