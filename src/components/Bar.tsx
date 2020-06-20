@@ -32,7 +32,7 @@ export function Bar(props: BarProps) {
         }
       />
       <text
-        fill="rgba(0, 0, 0, 0.5)"
+        fill={props.done || props.active ? "white" : "rgba(0, 0, 0, 0.5)"}
         fontSize="11"
         x={`${x + 5}px`}
         y={`189`}

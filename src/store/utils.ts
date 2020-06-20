@@ -212,13 +212,16 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
       }
     }
 
-    // making a copy
-    newArr = [...currentArr];
+    if (currentArr[i]["active"] === true) {
+      // making a copy
+      newArr = [...currentArr];
 
-    // modifying value of current to be false
-    newArr[i] = { ...newArr[i], active: false };
-    steps.push(newArr);
-    currentArr = newArr;
+      // modifying value of current to be false
+      newArr[i] = { ...newArr[i], active: false };
+      steps.push(newArr);
+      currentArr = newArr;
+    }
+
     current = currentArr[j + 1];
   }
 
