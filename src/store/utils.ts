@@ -251,38 +251,44 @@ function mergeSort(arr: DATA_SET): SORTING_STEPS {
 
       let i = left;
       while (left < leftLimit && right < rightLimit) {
+        let currentArr = [...sorted];
+        currentArr[left] = { ...currentArr[left], active: true };
+        currentArr[right] = { ...currentArr[right], active: true };
+        steps.push(currentArr);
+
         if (sorted[left]["value"] <= sorted[right]["value"]) {
           let currentArr = [...sorted];
           currentArr[left] = { ...currentArr[left], active: true };
+          currentArr[right] = { ...currentArr[right], active: false };
+
           steps.push(currentArr);
+
           currentArr = [...sorted];
-          steps.push(currentArr);
 
           buffer[i++] = currentArr[left++];
         } else {
           let currentArr = [...sorted];
           currentArr[right] = { ...currentArr[right], active: true };
-          steps.push(currentArr);
-          currentArr = [...sorted];
+          currentArr[left] = { ...currentArr[left], active: false };
           steps.push(currentArr);
 
-          buffer[i++] = sorted[right++];
+          currentArr = [...sorted];
+
+          buffer[i++] = currentArr[right++];
         }
       }
       while (left < leftLimit) {
         let currentArr = [...sorted];
         currentArr[left] = { ...currentArr[left], active: true };
         steps.push(currentArr);
-        currentArr = [...sorted];
-        steps.push(currentArr);
+        // currentArr = [...sorted];
+        // steps.push(currentArr);
 
         buffer[i++] = sorted[left++];
       }
       while (right < rightLimit) {
         let currentArr = [...sorted];
         currentArr[right] = { ...currentArr[right], active: true };
-        steps.push(currentArr);
-        currentArr = [...sorted];
         steps.push(currentArr);
 
         buffer[i++] = sorted[right++];
@@ -293,7 +299,11 @@ function mergeSort(arr: DATA_SET): SORTING_STEPS {
   }
 
   // return sorted;
-  steps.push(sorted.map((v) => ({ ...v, done: true })));
+  let currentArr = sorted;
+  for (let i = 0; i < arr.length; i++) {
+    currentArr[i] = { ...currentArr[i], done: true };
+    steps.push([...currentArr]);
+  }
   return steps;
 }
 
