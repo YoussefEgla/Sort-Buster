@@ -230,37 +230,45 @@ export function insertion(arr: DATA_SET): SORTING_STEPS {
   return steps;
 }
 
-export function mergeSort(arr: DATA_SET): DATA_SET {
-  // Edge case
-  if (arr.length <= 1) return [...arr];
+/**
+ * Merge Sort
+ */
+function mergeSteps(input: DATA_SET): SORTING_STEPS {
+  const steps = [input];
 
-  let currentArr = [...arr];
+  const finalStep = mergeSort(input);
+  function mergeSort(arr: DATA_SET): DATA_SET {
+    // Edge case
+    if (arr.length <= 1) return [...arr];
 
-  // Dividing Part
-  let mid = Math.floor(currentArr.length / 2);
-  let left = mergeSort(currentArr.slice(0, mid));
-  let right = mergeSort(currentArr.slice(mid));
+    let currentArr = [...arr];
 
-  // Merging Part
-  const merge = (a: DATA_SET, b: DATA_SET) => {
-    let sorted: DATA_SET = [];
+    // Dividing Part
+    let mid = Math.floor(currentArr.length / 2);
+    let left = mergeSort(currentArr.slice(0, mid));
+    let right = mergeSort(currentArr.slice(mid));
 
-    let currentA = [...a];
-    let currentB = [...b];
+    // Merging Part
+    const merge = (a: DATA_SET, b: DATA_SET) => {
+      let sorted: DATA_SET = [];
 
-    // Loop while length are not equal 0
-    while (a.length && b.length) {
-      if (currentA[0]["value"] < currentB[0]["value"]) {
-        sorted.push(currentA.shift() as DATA_POINT);
-      } else {
-        sorted.push(currentB.shift() as DATA_POINT);
+      // Loop while length are not equal 0
+      while (a.length && b.length) {
+        if (a[0]["value"] < b[0]["value"]) {
+          sorted.push(a.shift() as DATA_POINT);
+        } else {
+          sorted.push(b.shift() as DATA_POINT);
+        }
       }
-    }
 
-    return sorted.concat(...currentA, ...currentB);
-  };
+      return sorted.concat(...a, ...b);
+    };
 
-  return merge(left, right);
+    return merge(left, right);
+  }
+
+  steps.push(finalStep);
+  return steps;
 }
 
 export function generateSteps(method: SORTING_METHOD) {
@@ -273,6 +281,9 @@ export function generateSteps(method: SORTING_METHOD) {
 
     case "INSERTION SORT":
       return insertion;
+
+    case "MERGE SORT":
+      return mergeSteps;
 
     default:
       return bubbleSort;
