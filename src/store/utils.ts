@@ -447,6 +447,64 @@ function randomQuick(arr: DATA_SET) {
   return steps;
 }
 
+function cocktailSort(input: DATA_SET): SORTING_STEPS {
+  const steps = [input];
+
+  const arr = [...input];
+  let swapped = false;
+
+  let end = arr.length - 2;
+
+  do {
+    swapped = false;
+
+    for (let i = 0; i <= end; i++) {
+      arr[i] = { ...arr[i], active: true };
+      arr[i + 1] = { ...arr[i + 1], active: true };
+      steps.push([...arr]);
+
+      if (arr[i]["value"] > arr[i + 1]["value"]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+
+        steps.push([...arr]);
+        swapped = true;
+
+        if (i === end) {
+          arr[end + 1] = { ...arr[end + 1], done: true };
+          end--;
+          steps.push([...arr]);
+        }
+      }
+
+      arr[i] = { ...arr[i], active: false };
+      arr[i + 1] = { ...arr[i + 1], active: false };
+      steps.push([...arr]);
+    }
+
+    if (!swapped) {
+      break;
+    }
+    for (let i = end; i > 0; i--) {
+      arr[i] = { ...arr[i], active: true };
+      arr[i + 1] = { ...arr[i + 1], active: true };
+      steps.push([...arr]);
+
+      if (arr[i]["value"] > arr[i + 1]["value"]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        steps.push([...arr]);
+        swapped = true;
+      }
+
+      arr[i] = { ...arr[i], active: false };
+      arr[i + 1] = { ...arr[i + 1], active: false };
+      steps.push([...arr]);
+    }
+  } while (swapped);
+
+  steps.push([...arr]);
+  return steps;
+}
+
 /**
  *  Gnerate steps function
  */
@@ -469,6 +527,9 @@ export function generateSteps(method: SORTING_METHOD) {
 
     case "RANDOM QUICK SORT":
       return randomQuick;
+
+    case "COCKTAIL SORT":
+      return cocktailSort;
 
     default:
       return bubbleSort;

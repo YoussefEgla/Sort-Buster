@@ -26,11 +26,10 @@ export function Navigation() {
           <NavTab value="BUBBLE SORT" abbr="BBL" />
           <NavTab value="SELECTION SORT" abbr="SEL" />
           <NavTab value="INSERTION SORT" abbr="INS" />
+          <NavTab value="COCKTAIL SORT" abbr="CKT" />
           <NavTab value="MERGE SORT" abbr="MRG" />
           <NavTab value="QUICK SORT" abbr="QUI" />
           <NavTab value="RANDOM QUICK SORT" abbr="R-Q" />
-          <NavTab value="COUNTING SORT" abbr="COU" />
-          <NavTab value="RADIX SORT" abbr="RDX" />
         </Material.Tabs>
       </div>
     </nav>
