@@ -1,4 +1,5 @@
 import * as uuid from "uuid";
+import { partition } from "d3";
 
 /**
  * Parse and convert numbers in string to array
@@ -378,6 +379,49 @@ function quickSort(arr: DATA_SET) {
   return steps;
 }
 
+function randomQuick(arr: DATA_SET) {
+  const steps: SORTING_STEPS = [arr];
+
+  function quickSort(arr: DATA_SET, left = 0, right = arr.length - 1) {
+    if (arr.length > 1) {
+      const position = partition(arr, left, right);
+      if (left < position - 1) quickSort(arr, left, position - 1);
+      if (position < right) quickSort(arr, position, right);
+    }
+    return arr;
+  }
+
+  function partition(arr: DATA_SET, left: number, right: number) {
+    const pivot = arr[Math.floor(Math.random() * (right - left + 1) + left)];
+
+    while (left <= right) {
+      while (arr[left]["value"] < pivot["value"]) {
+        left++;
+      }
+      while (arr[right]["value"] > pivot["value"]) {
+        right--;
+      }
+      if (left <= right) {
+        swap(arr, left, right);
+        left++;
+        right--;
+      }
+    }
+    return left;
+  }
+
+  function swap(arr: DATA_SET, left: number, right: number) {
+    const temp = arr[left];
+    arr[left] = arr[right];
+    arr[right] = temp;
+  }
+
+  const final = [...arr];
+  quickSort(final);
+  steps.push(final);
+  return steps;
+}
+
 /**
  *  Gnerate steps function
  */
@@ -397,6 +441,9 @@ export function generateSteps(method: SORTING_METHOD) {
 
     case "QUICK SORT":
       return quickSort;
+
+    case "RANDOM QUICK SORT":
+      return randomQuick;
 
     default:
       return bubbleSort;
