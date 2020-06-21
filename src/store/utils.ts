@@ -307,45 +307,34 @@ function mergeSort(arr: DATA_SET): SORTING_STEPS {
   return steps;
 }
 
-function quickSort(a: DATA_SET) {
-  const steps: SORTING_STEPS = [a];
+function quickSort(arr: DATA_SET) {
+  const steps: SORTING_STEPS = [arr];
 
-  function quick_Sort(arr: DATA_SET): DATA_SET {
-    // handle edge case
-    if (arr.length <= 1) return arr;
-
-    // take copy of the input array
-    const origArray = [...arr];
-
-    // assemble original array
-    console.log(arr.length);
-
-    const left: DATA_SET = [];
-    const right: DATA_SET = [];
-
-    const pivot: DATA_POINT = { ...arr[arr.length - 1], active: false };
-    origArray[arr.length - 1] = pivot;
-    origArray.pop();
-
-    const length = origArray.length;
-
-    for (var i = 0; i < length; i++) {
-      if (origArray[i]["value"] <= pivot["value"]) {
-        left.push(origArray[i]);
-      } else {
-        right.push(origArray[i]);
-      }
+  function quick_Sort(a: DATA_SET, low: number, high: number) {
+    if (low < high) {
+      const p = partition(a, low, high);
+      quick_Sort(a, low, p - 1);
+      quick_Sort(a, p + 1, high);
     }
-
-    const sortLeft = quick_Sort(left);
-    const sortRight = quick_Sort(right);
-    const sorted = [...sortLeft, pivot, ...sortRight];
-
-    return sorted;
   }
 
-  const lastStep = quick_Sort(a);
-  steps.push(lastStep);
+  function partition(a: DATA_SET, low: number, high: number) {
+    let pivot = a[high];
+    let i = low;
+
+    for (let j = low; j <= high; j++) {
+      if (a[j]["value"] < pivot["value"]) {
+        [a[i], a[j]] = [a[j], a[i]];
+        i++;
+      }
+    }
+    [a[i], a[high]] = [a[high], a[i]];
+    return i;
+  }
+
+  const final = [...arr];
+  quick_Sort(final, 0, final.length - 1);
+  steps.push(final);
   return steps;
 }
 
