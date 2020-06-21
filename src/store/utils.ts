@@ -451,14 +451,17 @@ function cocktailSort(input: DATA_SET): SORTING_STEPS {
   const steps = [input];
 
   const arr = [...input];
+
   let swapped = false;
-
-  let end = arr.length - 2;
-
+  let beginIdx = 0;
+  let endIdx = arr.length - 2;
   do {
     swapped = false;
 
-    for (let i = 0; i <= end; i++) {
+    let newBeginIdx = endIdx;
+    let newEndIdx = beginIdx;
+
+    for (let i = beginIdx; i <= endIdx; i++) {
       arr[i] = { ...arr[i], active: true };
       arr[i + 1] = { ...arr[i + 1], active: true };
       steps.push([...arr]);
@@ -468,23 +471,20 @@ function cocktailSort(input: DATA_SET): SORTING_STEPS {
 
         steps.push([...arr]);
         swapped = true;
-
-        if (i === end) {
-          arr[end + 1] = { ...arr[end + 1], done: true };
-          end--;
-          steps.push([...arr]);
-        }
+        newEndIdx = i;
       }
 
       arr[i] = { ...arr[i], active: false };
       arr[i + 1] = { ...arr[i + 1], active: false };
       steps.push([...arr]);
     }
+
+    endIdx = newEndIdx - 1;
 
     if (!swapped) {
       break;
     }
-    for (let i = end; i > 0; i--) {
+    for (let i = endIdx; i >= beginIdx; i--) {
       arr[i] = { ...arr[i], active: true };
       arr[i + 1] = { ...arr[i + 1], active: true };
       steps.push([...arr]);
@@ -493,12 +493,15 @@ function cocktailSort(input: DATA_SET): SORTING_STEPS {
         [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
         steps.push([...arr]);
         swapped = true;
+        newBeginIdx = i;
       }
 
       arr[i] = { ...arr[i], active: false };
       arr[i + 1] = { ...arr[i + 1], active: false };
       steps.push([...arr]);
     }
+
+    beginIdx = newBeginIdx + 1;
   } while (swapped);
 
   steps.push([...arr]);
