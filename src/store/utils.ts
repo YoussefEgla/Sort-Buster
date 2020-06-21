@@ -474,11 +474,21 @@ function cocktailSort(input: DATA_SET): SORTING_STEPS {
         newEndIdx = i;
       }
 
+      if (i === endIdx) {
+        arr[i + 1] = { ...arr[i + 1], done: true };
+        steps.push([...arr]);
+      }
+
       arr[i] = { ...arr[i], active: false };
       arr[i + 1] = { ...arr[i + 1], active: false };
       steps.push([...arr]);
     }
 
+    // all elements after newEndIdx are in correct order
+    for (let j = newEndIdx + 1; j < endIdx + 1; j++) {
+      arr[j] = { ...arr[j], done: true };
+    }
+    steps.push([...arr]);
     endIdx = newEndIdx - 1;
 
     if (!swapped) {
@@ -500,7 +510,12 @@ function cocktailSort(input: DATA_SET): SORTING_STEPS {
       arr[i + 1] = { ...arr[i + 1], active: false };
       steps.push([...arr]);
     }
+    // all elements before new begin index are in correct order
+    for (let j = beginIdx - 1; j < newBeginIdx; j++) {
+      arr[j] = { ...arr[j], done: true };
+    }
 
+    steps.push([...arr]);
     beginIdx = newBeginIdx + 1;
   } while (swapped);
 
