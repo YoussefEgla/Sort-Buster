@@ -257,7 +257,6 @@ function mergeSort(arr: DATA_SET): SORTING_STEPS {
         steps.push(currentArr);
 
         if (sorted[left]["value"] <= sorted[right]["value"]) {
-<<<<<<< HEAD
           let currentArr = [...sorted];
           currentArr[left] = { ...currentArr[left], active: true };
           currentArr[right] = { ...currentArr[right], active: false };
@@ -276,66 +275,27 @@ function mergeSort(arr: DATA_SET): SORTING_STEPS {
           currentArr = [...sorted];
 
           buffer[i++] = currentArr[right++];
-=======
-          let currentArr = [...buffer];
-          steps.push(currentArr);
-
-          buffer[i++] = sorted[left++];
-
-          currentArr = [...buffer];
-          steps.push(currentArr);
-        } else {
-          let currentArr = [...buffer];
-          steps.push(currentArr);
-
-          buffer[i++] = sorted[right++];
-
-          currentArr = [...buffer];
-          steps.push(currentArr);
->>>>>>> master
         }
       }
-
       while (left < leftLimit) {
-<<<<<<< HEAD
         let currentArr = [...sorted];
         currentArr[left] = { ...currentArr[left], active: true };
         steps.push(currentArr);
         // currentArr = [...sorted];
         // steps.push(currentArr);
-=======
-        let currentArr = [...buffer];
-        steps.push(currentArr);
->>>>>>> master
 
         buffer[i++] = sorted[left++];
-
-        currentArr = [...buffer];
-        steps.push(currentArr);
       }
       while (right < rightLimit) {
-<<<<<<< HEAD
         let currentArr = [...sorted];
         currentArr[right] = { ...currentArr[right], active: true };
-=======
-        let currentArr = [...buffer];
->>>>>>> master
         steps.push(currentArr);
 
         buffer[i++] = sorted[right++];
-
-        currentArr = [...buffer];
-        steps.push(currentArr);
       }
     }
 
-    let currentArr = [...buffer];
-    steps.push(currentArr);
-
     [sorted, buffer] = [buffer, sorted];
-
-    currentArr = [...sorted];
-    steps.push(currentArr);
   }
 
   // return sorted;
