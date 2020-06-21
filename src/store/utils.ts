@@ -307,6 +307,48 @@ function mergeSort(arr: DATA_SET): SORTING_STEPS {
   return steps;
 }
 
+function quickSort(a: DATA_SET) {
+  const steps: SORTING_STEPS = [a];
+
+  function quick_Sort(arr: DATA_SET): DATA_SET {
+    // handle edge case
+    if (arr.length <= 1) return arr;
+
+    // take copy of the input array
+    const origArray = [...arr];
+
+    // assemble original array
+    console.log(arr.length);
+
+    const left: DATA_SET = [];
+    const right: DATA_SET = [];
+
+    const pivot: DATA_POINT = { ...arr[arr.length - 1], active: false };
+    origArray[arr.length - 1] = pivot;
+    origArray.pop();
+
+    const length = origArray.length;
+
+    for (var i = 0; i < length; i++) {
+      if (origArray[i]["value"] <= pivot["value"]) {
+        left.push(origArray[i]);
+      } else {
+        right.push(origArray[i]);
+      }
+    }
+
+    const sortLeft = quick_Sort(left);
+    const sortRight = quick_Sort(right);
+    const sorted = [...sortLeft, pivot, ...sortRight];
+
+    return sorted;
+  }
+
+  const lastStep = quick_Sort(a);
+  steps.push(lastStep);
+  return steps;
+}
+
 /**
  *  Gnerate steps function
  */
@@ -323,6 +365,9 @@ export function generateSteps(method: SORTING_METHOD) {
 
     case "MERGE SORT":
       return mergeSort;
+
+    case "QUICK SORT":
+      return quickSort;
 
     default:
       return bubbleSort;
