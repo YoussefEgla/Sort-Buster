@@ -392,7 +392,14 @@ function randomQuick(arr: DATA_SET) {
   }
 
   function partition(arr: DATA_SET, left: number, right: number) {
-    const pivot = arr[Math.floor(Math.random() * (right - left + 1) + left)];
+    const p = Math.floor(Math.random() * (right - left + 1) + left);
+
+    // highlight pivot
+    arr[p] = { ...arr[p], active: true };
+
+    steps.push([...arr]);
+
+    const pivot = arr[p];
 
     while (left <= right) {
       while (arr[left]["value"] < pivot["value"]) {
@@ -403,17 +410,35 @@ function randomQuick(arr: DATA_SET) {
       }
       if (left <= right) {
         swap(arr, left, right);
+
         left++;
         right--;
       }
     }
+
+    arr[p] = { ...arr[p], active: false };
+    // steps.push([...arr]);
+
     return left;
   }
 
   function swap(arr: DATA_SET, left: number, right: number) {
-    const temp = arr[left];
-    arr[left] = arr[right];
-    arr[right] = temp;
+    steps.push([...arr]);
+
+    arr[left] = { ...arr[left], active: true };
+    arr[right] = { ...arr[right], active: true };
+
+    steps.push([...arr]);
+
+    [arr[left], arr[right]] = [arr[right], arr[left]];
+
+    steps.push([...arr]);
+
+    arr[left] = { ...arr[left], active: false };
+
+    arr[right] = { ...arr[right], active: false };
+
+    steps.push([...arr]);
   }
 
   const final = [...arr];
