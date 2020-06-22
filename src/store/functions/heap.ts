@@ -13,12 +13,21 @@ export default function heapSort(a: DATA_SET) {
   }
 
   while (k >= 0) {
+    arr[k] = { ...arr[k], active: true };
+    arr[0] = { ...arr[0], active: true };
     steps.push([...arr]);
+
     swap(arr, k, 0);
+    steps.push([...arr]);
+
+    arr[k] = { ...arr[k], active: false };
+    arr[0] = { ...arr[0], active: false };
+
     heapify(arr, k, 0);
 
     arr[k] = { ...arr[k], done: true };
     steps.push([...arr]);
+
     k--;
   }
 
@@ -27,26 +36,29 @@ export default function heapSort(a: DATA_SET) {
     let left = i * 2 + 1;
     let right = left + 1;
 
-    steps.push([...arr]);
+    // arr[largest] = { ...arr[largest], active: true };
+    // steps.push([...arr]);
+
     if (left < length && arr[left]["value"] > arr[largest]["value"]) {
-      steps.push([...arr]);
       largest = left;
     }
 
-    steps.push([...arr]);
-
     if (right < length && arr[right]["value"] > arr[largest]["value"]) {
-      steps.push([...arr]);
       largest = right;
     }
-    steps.push([...arr]);
 
     if (largest !== i) {
+      arr[i] = { ...arr[i], active: true };
+      arr[largest] = { ...arr[largest], active: true };
       steps.push([...arr]);
+
       swap(arr, i, largest);
       steps.push([...arr]);
+
+      arr[i] = { ...arr[i], active: false };
+      arr[largest] = { ...arr[largest], active: false };
+
       heapify(arr, length, largest);
-      steps.push([...arr]);
     }
   }
 
