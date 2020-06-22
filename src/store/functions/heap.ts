@@ -13,32 +13,45 @@ export default function heapSort(a: DATA_SET) {
   }
 
   while (k >= 0) {
+    steps.push([...arr]);
     swap(arr, k, 0);
     heapify(arr, k, 0);
+
+    arr[k] = { ...arr[k], done: true };
+    steps.push([...arr]);
     k--;
   }
 
-  steps.push(arr);
+  function heapify(arr: DATA_SET, length: number, i: number): void {
+    let largest = i;
+    let left = i * 2 + 1;
+    let right = left + 1;
+
+    steps.push([...arr]);
+    if (left < length && arr[left]["value"] > arr[largest]["value"]) {
+      steps.push([...arr]);
+      largest = left;
+    }
+
+    steps.push([...arr]);
+
+    if (right < length && arr[right]["value"] > arr[largest]["value"]) {
+      steps.push([...arr]);
+      largest = right;
+    }
+    steps.push([...arr]);
+
+    if (largest !== i) {
+      steps.push([...arr]);
+      swap(arr, i, largest);
+      steps.push([...arr]);
+      heapify(arr, length, largest);
+      steps.push([...arr]);
+    }
+  }
+
+  steps.push([...arr]);
   return steps;
-}
-
-function heapify(arr: DATA_SET, length: number, i: number): void {
-  let largest = i;
-  let left = i * 2 + 1;
-  let right = left + 1;
-
-  if (left < length && arr[left]["value"] > arr[largest]["value"]) {
-    largest = left;
-  }
-
-  if (right < length && arr[right]["value"] > arr[largest]["value"]) {
-    largest = right;
-  }
-
-  if (largest !== i) {
-    swap(arr, i, largest);
-    heapify(arr, length, largest);
-  }
 }
 
 function swap(arr: DATA_SET, i: number, j: number) {
