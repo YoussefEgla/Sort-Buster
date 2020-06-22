@@ -6,6 +6,9 @@ export default function (arr: DATA_SET) {
       const p = partition(a, low, high);
       quick_Sort(a, low, p - 1);
       quick_Sort(a, p + 1, high);
+    } else {
+      a[low] = { ...a[low], done: true };
+      a[high] = { ...a[high], done: true };
     }
   }
 
