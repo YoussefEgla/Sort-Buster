@@ -19,46 +19,16 @@ export default function (arr: DATA_SET): SORTING_STEPS {
 
       let i = left;
       while (left < leftLimit && right < rightLimit) {
-        let currentArr = [...sorted];
-        currentArr[left] = { ...currentArr[left], active: true };
-        currentArr[right] = { ...currentArr[right], active: true };
-        steps.push(currentArr);
-
         if (sorted[left]["value"] <= sorted[right]["value"]) {
-          let currentArr = [...sorted];
-          currentArr[left] = { ...currentArr[left], active: true };
-          currentArr[right] = { ...currentArr[right], active: false };
-
-          steps.push(currentArr);
-
-          currentArr = [...sorted];
-
-          buffer[i++] = currentArr[left++];
+          buffer[i++] = sorted[left++];
         } else {
-          let currentArr = [...sorted];
-          currentArr[right] = { ...currentArr[right], active: true };
-          currentArr[left] = { ...currentArr[left], active: false };
-          steps.push(currentArr);
-
-          currentArr = [...sorted];
-
-          buffer[i++] = currentArr[right++];
+          buffer[i++] = sorted[right++];
         }
       }
       while (left < leftLimit) {
-        let currentArr = [...sorted];
-        currentArr[left] = { ...currentArr[left], active: true };
-        steps.push(currentArr);
-        // currentArr = [...sorted];
-        // steps.push(currentArr);
-
         buffer[i++] = sorted[left++];
       }
       while (right < rightLimit) {
-        let currentArr = [...sorted];
-        currentArr[right] = { ...currentArr[right], active: true };
-        steps.push(currentArr);
-
         buffer[i++] = sorted[right++];
       }
     }
@@ -67,10 +37,6 @@ export default function (arr: DATA_SET): SORTING_STEPS {
   }
 
   // return sorted;
-  let currentArr = sorted;
-  for (let i = 0; i < arr.length; i++) {
-    currentArr[i] = { ...currentArr[i], done: true };
-    steps.push([...currentArr]);
-  }
+  steps.push([...sorted]);
   return steps;
 }
