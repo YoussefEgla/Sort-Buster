@@ -7,6 +7,7 @@ type INSERTION_SORT = "INSERTION SORT";
 type QUICK_SORT = "QUICK SORT";
 type RANDOM_QUICK_SORT = "RANDOM QUICK SORT";
 type COCKTAIL_SORT = "COCKTAIL SORT";
+type HEAP_SORT = "HEAP SORT";
 
 //
 //
@@ -17,7 +18,8 @@ type SORTING_METHOD =
   | INSERTION_SORT
   | QUICK_SORT
   | RANDOM_QUICK_SORT
-  | COCKTAIL_SORT;
+  | COCKTAIL_SORT
+  | HEAP_SORT;
 
 type DATA_POINT = {
   value: number;
@@ -25,5 +27,6 @@ type DATA_POINT = {
   active: boolean;
   done: boolean;
 };
+
 type DATA_SET = DATA_POINT[];
 type SORTING_STEPS = DATA_SET[];
