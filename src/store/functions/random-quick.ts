@@ -1,13 +1,14 @@
 export default function (arr: DATA_SET) {
   const steps: SORTING_STEPS = [arr];
 
-  function quickSort(arr: DATA_SET, left = 0, right = arr.length - 1) {
-    if (arr.length > 1) {
-      const position = partition(arr, left, right);
-      if (left < position - 1) quickSort(arr, left, position - 1);
-      if (position < right) quickSort(arr, position, right);
+  function quickSort(arr: DATA_SET, low = 0, high = arr.length - 1) {
+    if (low < high) {
+      const position = partition(arr, low, high);
+      if (low < position - 1) quickSort(arr, low, position - 1);
+      if (position < high) quickSort(arr, position, high);
     }
-    return arr;
+    arr[low] = { ...arr[low], done: true };
+    arr[high] = { ...arr[high], done: true };
   }
 
   function partition(arr: DATA_SET, left: number, right: number) {

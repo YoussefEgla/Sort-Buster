@@ -6,10 +6,9 @@ export default function (arr: DATA_SET) {
       const p = partition(a, low, high);
       quick_Sort(a, low, p - 1);
       quick_Sort(a, p + 1, high);
-    } else {
-      a[low] = { ...a[low], done: true };
-      a[high] = { ...a[high], done: true };
     }
+    a[low] = { ...a[low], done: true };
+    a[high] = { ...a[high], done: true };
   }
 
   function partition(a: DATA_SET, low: number, high: number) {
@@ -43,8 +42,6 @@ export default function (arr: DATA_SET) {
       }
     }
 
-    // remove pivot highlight
-    // a[high] = { ...a[high], active: false };
     a[i] = { ...a[i], active: true };
     steps.push([...a]);
 
