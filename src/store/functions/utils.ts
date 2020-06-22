@@ -59,9 +59,6 @@ export function nearlySortArr(
   desc = false,
   percent = 0.8
 ): number[] {
-  const max = Math.max(...arr);
-  const min = Math.min(...arr);
-
   if (desc) {
     return arr.sort((a, b) => b - a);
   } else {

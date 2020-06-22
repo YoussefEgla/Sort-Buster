@@ -27,7 +27,6 @@ export function Navigation() {
           <NavTab value="SELECTION SORT" abbr="SEL" />
           <NavTab value="INSERTION SORT" abbr="INS" />
           <NavTab value="COCKTAIL SORT" abbr="CKT" />
-          <NavTab value="MERGE SORT" abbr="MRG" />
           <NavTab value="QUICK SORT" abbr="QUI" />
           <NavTab value="RANDOM QUICK SORT" abbr="R-Q" />
         </Material.Tabs>

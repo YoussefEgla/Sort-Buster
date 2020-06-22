@@ -18,8 +18,6 @@ export default function (arr: DATA_SET) {
     steps.push([...a]);
 
     for (let j = low; j <= high; j++) {
-      let currentArr = [...a];
-
       // highlight compared value
       a[j] = { ...a[j], active: true };
       steps.push([...a]);

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Actions } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import * as utils from "./functions/";
 import { RootState, AppThunk } from ".";
 
