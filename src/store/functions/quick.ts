@@ -9,6 +9,8 @@ export default function (arr: DATA_SET) {
     }
     a[low] = { ...a[low], done: true };
     a[high] = { ...a[high], done: true };
+
+    return a;
   }
 
   function partition(a: DATA_SET, low: number, high: number) {
@@ -61,8 +63,8 @@ export default function (arr: DATA_SET) {
     return i;
   }
 
-  const final = [...arr];
-  quick_Sort(final, 0, final.length - 1);
+  const final = quick_Sort([...arr], 0, arr.length - 1);
+
   steps.push(final.map((v) => (!v.done ? { ...v, done: true } : v)));
   return steps;
 }
