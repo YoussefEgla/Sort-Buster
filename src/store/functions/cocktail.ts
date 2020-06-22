@@ -71,5 +71,8 @@ export default function (input: DATA_SET): SORTING_STEPS {
   } while (swapped);
 
   steps.push([...arr]);
+  const last = arr.map((v) => (v.done ? v : { ...v, done: true }));
+  steps.push(last);
+
   return steps;
 }
