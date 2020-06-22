@@ -14,7 +14,6 @@ function App() {
       </div>
       <div className={classes.bottomContainer}>
         <Container.Controls />
-        <div>Code Explaination</div>
       </div>
     </div>
   );
