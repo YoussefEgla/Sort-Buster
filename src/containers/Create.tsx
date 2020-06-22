@@ -6,8 +6,6 @@ import { actions } from "../store/Slice";
 export function Create() {
   const dispatch = ReactRedux.useDispatch();
 
-  const [createInput, setCreateInput] = React.useState("23, 27, 13, 5");
-
   return (
     <React.Fragment>
       <div
@@ -39,6 +37,15 @@ export function Create() {
         >
           Sorted set
         </Material.Button>
+        <Material.Button
+          onClick={() =>
+            dispatch(actions.create({ type: "SORTED", desc: true }))
+          }
+          variant="contained"
+          color="primary"
+        >
+          Reversed
+        </Material.Button>
       </div>
       <Material.Divider />
       <div
@@ -53,22 +60,13 @@ export function Create() {
           id="user-defined-set"
           label="Custom Set"
           helperText="Comma separated numbers"
-          value={createInput}
-          onChange={(e) => setCreateInput(e.target.value)}
+          defaultValue="23, 27, 13, 5"
+          onChange={(e) =>
+            dispatch(
+              actions.create({ type: "USER DEFINED", data: e.target.value })
+            )
+          }
         />
-        <div style={{ margin: "auto 0" }}>
-          <Material.Button
-            onClick={() =>
-              dispatch(
-                actions.create({ type: "USER DEFINED", data: createInput })
-              )
-            }
-            variant="contained"
-            color="primary"
-          >
-            Custom Set
-          </Material.Button>
-        </div>
       </div>
     </React.Fragment>
   );

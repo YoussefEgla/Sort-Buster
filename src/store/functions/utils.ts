@@ -5,7 +5,7 @@ import * as uuid from "uuid";
  */
 export function strToArr(str: string): number[] {
   return str
-    .replace(/[^1-9,]/g, "")
+    .replace(/[^0-9,]/g, "")
     .trim()
     .split(",")
     .filter((v) => !isNaN(parseInt(v)))
