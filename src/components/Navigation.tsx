@@ -29,6 +29,7 @@ export function Navigation() {
           <NavTab value="COCKTAIL SORT" abbr="CKT" />
           <NavTab value="QUICK SORT" abbr="QUI" />
           <NavTab value="RANDOM QUICK SORT" abbr="R-Q" />
+          <NavTab value="HEAP SORT" abbr="HEA" />
         </Material.Tabs>
       </div>
     </nav>

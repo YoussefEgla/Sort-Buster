@@ -5,7 +5,7 @@ import bubble from "./bubble";
 import cocktail from "./cocktail";
 import randomQuick from "./random-quick";
 import quick from "./quick";
-import merge from "./merge";
+import heap from "./heap";
 import insertion from "./insertion";
 import selection from "./selection";
 
@@ -24,9 +24,6 @@ export function generateSteps(method: SORTING_METHOD) {
     case "INSERTION SORT":
       return insertion;
 
-    case "MERGE SORT":
-      return merge;
-
     case "QUICK SORT":
       return quick;
 
@@ -35,6 +32,9 @@ export function generateSteps(method: SORTING_METHOD) {
 
     case "COCKTAIL SORT":
       return cocktail;
+
+    case "HEAP SORT":
+      return heap;
 
     default:
       return bubble;
