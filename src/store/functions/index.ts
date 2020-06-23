@@ -8,6 +8,7 @@ import quick from "./quick";
 import heap from "./heap";
 import insertion from "./insertion";
 import selection from "./selection";
+import shell from "./shell";
 
 export * from "./utils";
 /**
@@ -35,6 +36,9 @@ export function generateSteps(method: SORTING_METHOD) {
 
     case "HEAP SORT":
       return heap;
+
+    case "SHELL SORT":
+      return shell;
 
     default:
       return bubble;
