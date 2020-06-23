@@ -17,7 +17,7 @@ export default function (arr: DATA_SET): SORTING_STEPS {
         for (let j = i; j >= h && less(arr, j, j - h); j = j - h) {
           swap(arr, j, j - h);
 
-          if (h == 1 && (!less(arr, j - h, j) || j < h)) {
+          if (h === 1 && (!less(arr, j - h, j) || j < h)) {
             arr[j] = { ...arr[j], done: true };
             arr[j - h] = { ...arr[j - h], done: true };
           }
