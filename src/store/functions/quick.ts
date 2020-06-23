@@ -63,8 +63,11 @@ export default function (arr: DATA_SET) {
     return i;
   }
 
-  const final = quick_Sort([...arr], 0, arr.length - 1);
+  const final = quick_Sort([...arr], 0, arr.length - 1).map((v) => ({
+    ...v,
+    done: true,
+  }));
 
-  steps.push(final.map((v) => (!v.done ? { ...v, done: true } : v)));
+  steps.push(final);
   return steps;
 }
