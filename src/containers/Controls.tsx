@@ -3,6 +3,8 @@ import * as Material from "@material-ui/core";
 import * as Component from "../components";
 import * as Container from "./";
 
+import GitHubIcon from "@material-ui/icons/GitHub";
+
 export function Controls() {
   const [activePanel, setActivePanel] = React.useState("CREATE");
 
@@ -17,6 +19,12 @@ export function Controls() {
         >
           <Material.Tab label="CREATE" value="CREATE" />
           <Material.Tab label="SORT" value="SORT" />
+          <a
+            href="https://github.com/YoussefEgla/Sort-Buster"
+            style={{ margin: "25px auto  auto", color: "white" }}
+          >
+            <GitHubIcon />
+          </a>
         </Material.Tabs>
       </div>
 
