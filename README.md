@@ -4,6 +4,8 @@
 
 [Click here to view project in production](https://sortbuster.netlify.app/)
 
+[![Animation](https://github.com/YoussefEgla/Sort-Buster/blob/master/public/readme.gif?raw=true)](https://sortbuster.netlify.app/)
+
 Built with
 
 - React
