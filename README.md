@@ -46,14 +46,14 @@ The biggest challenge I faced was solving the play / pause and rewind problem. \
 There was a lot of different ideas that came to my mind on how to tackle \
 this, I managed to squeeze them to those 3
 
-- Write algorithms as generator functions
+- **Write algorithms as generator functions**
 
   - The idea is to yield return at desired step and pause code execution.
 
   - **Trade-off :** It will add more complexity to the state as we need to store \
     already yielded results and rewind without invoking the functions.
 
-- Utilize browser devTools behind the scene
+- **Utilize browser devTools behind the scene**
 
   - Debugger has the ability to pause execution, step through code. \
     and output result at any given moment during code execution lifecycle. \
@@ -61,7 +61,7 @@ this, I managed to squeeze them to those 3
 
   - **Trade-off :** We will need to handle browser compatibility.
 
-- Generate future states ahead of time
+- **Generate future states ahead of time**
 
   - This idea is about making a higher order function that takes an array \
     of values and make copies of the array that will be represented as steps.\
@@ -289,14 +289,14 @@ interface GeneralState {
 
 ### Room for improvement
 
-- Smoothing bars transition on re-render
+- **Smoothing bars transition on re-render**
 
   - Need to pass previous index during steps generation \
     so we can calculate the previous position of the bar.
 
-- Mobile responsiveness
+- **Mobile responsiveness**
 
-- Represent multi-part steps
+- **Represent multi-part steps**
   - currently the application only works with in-place sorting algorithms \
     this means that it will either breaks down or developers won't be able to \
     represent out of place algorithms as counting sort and merge sort
