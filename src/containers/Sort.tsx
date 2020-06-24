@@ -2,6 +2,7 @@ import React from "react";
 import * as ReactRedux from "react-redux";
 import * as Slice from "../store/Slice";
 import * as Material from "@material-ui/core";
+import * as Components from "../components";
 
 //
 // Icons
@@ -14,89 +15,6 @@ import FastForwardIcon from "@material-ui/icons/FastForward";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 
-function ProgressSlider() {
-  const dispatch = ReactRedux.useDispatch();
-
-  const sortingSteps = ReactRedux.useSelector(Slice.sortingSteps);
-  const currentStep = ReactRedux.useSelector(Slice.currentStep);
-
-  return (
-    <Material.Slider
-      value={currentStep}
-      min={sortingSteps.length === 1 ? 1 : 0}
-      max={sortingSteps.length - 1}
-      onChange={(e, v) => {
-        dispatch(
-          Slice.actions.step({
-            type: "STEP TO",
-            index: typeof v === "number" ? v : v[0],
-          })
-        );
-      }}
-    />
-  );
-}
-
-function SpeedSlider() {
-  const dispatch = ReactRedux.useDispatch();
-
-  const currentSpeed = ReactRedux.useSelector(Slice.playSpeed);
-  const playback = ReactRedux.useSelector(Slice.playback);
-
-  return (
-    <div
-      style={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <Material.Typography>Speed in ms</Material.Typography>
-      <div
-        style={{
-          display: "flex",
-          width: "65%",
-          justifyContent: "space-between",
-        }}
-      >
-        <Material.Typography>Fast</Material.Typography>
-        <Material.Slider
-          min={1}
-          max={250}
-          value={currentSpeed}
-          track="inverted"
-          defaultValue={1}
-          onChange={(e, v) => {
-            const speed = Math.round(typeof v === "number" ? v : v[0]);
-            if (playback !== "PLAYING") {
-              dispatch(Slice.actions.changeSpeed(speed));
-            } else {
-              dispatch(Slice.actions.changeSpeed(speed));
-              dispatch(Slice.actions.pause());
-              dispatch(Slice.actions.playAsync());
-            }
-          }}
-          valueLabelDisplay="on"
-          style={{ width: "50%" }}
-        />
-        <Material.Typography>Slow</Material.Typography>
-      </div>
-    </div>
-  );
-}
-
-function StepsDisplay() {
-  const currentStep = ReactRedux.useSelector(Slice.currentStep);
-  const totalSteps = ReactRedux.useSelector(Slice.sortingSteps).length;
-
-  return (
-    <Material.Typography>
-      Step {currentStep + 1} of {totalSteps}
-    </Material.Typography>
-  );
-}
-
 export function Sort() {
   const classes = useStyles();
   const dispatch = ReactRedux.useDispatch();
@@ -107,7 +25,7 @@ export function Sort() {
   return (
     <React.Fragment>
       <div className={classes.topContainer}>
-        <SpeedSlider />
+        <Components.SpeedSlider />
       </div>
 
       <Material.Divider />
@@ -116,10 +34,10 @@ export function Sort() {
         <div className={classes.slider}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Material.Typography>Progress</Material.Typography>
-            <StepsDisplay />
+            <Components.StepsDisplay />
           </div>
 
-          <ProgressSlider />
+          <Components.ProgressSlider />
         </div>
         <Material.ButtonGroup size="small" aria-label="Control Sorting">
           <Material.Button
