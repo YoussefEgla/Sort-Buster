@@ -6,6 +6,8 @@ import { actions } from "../store/Slice";
 export function Create() {
   const dispatch = ReactRedux.useDispatch();
 
+  const [len, setLen] = React.useState(0);
+
   return (
     <React.Fragment>
       <div
@@ -17,21 +19,36 @@ export function Create() {
         }}
       >
         <Material.Button
-          onClick={() => dispatch(actions.create({ type: "RANDOM" }))}
+          onClick={() =>
+            dispatch(
+              actions.create({ type: "RANDOM", len: len ? len : undefined })
+            )
+          }
           variant="contained"
           color="primary"
         >
           Random set
         </Material.Button>
         <Material.Button
-          onClick={() => dispatch(actions.create({ type: "NEARLY SORTED" }))}
+          onClick={() =>
+            dispatch(
+              actions.create({
+                type: "NEARLY SORTED",
+                len: len ? len : undefined,
+              })
+            )
+          }
           variant="contained"
           color="primary"
         >
           Nearly Sorted
         </Material.Button>
         <Material.Button
-          onClick={() => dispatch(actions.create({ type: "SORTED" }))}
+          onClick={() =>
+            dispatch(
+              actions.create({ type: "SORTED", len: len ? len : undefined })
+            )
+          }
           variant="contained"
           color="primary"
         >
@@ -39,7 +56,13 @@ export function Create() {
         </Material.Button>
         <Material.Button
           onClick={() =>
-            dispatch(actions.create({ type: "SORTED", desc: true }))
+            dispatch(
+              actions.create({
+                type: "SORTED",
+                desc: true,
+                len: len ? len : undefined,
+              })
+            )
           }
           variant="contained"
           color="primary"
@@ -66,6 +89,22 @@ export function Create() {
               actions.create({ type: "USER DEFINED", data: e.target.value })
             )
           }
+        />
+        <Material.TextField
+          id="standard-number"
+          label="Dataset length"
+          helperText={`0 | null = random len`}
+          type="number"
+          onChange={(e) => {
+            const v =
+              parseInt(e.target.value) < 0 ? 0 : parseInt(e.target.value);
+            setLen(v);
+            dispatch(actions.create({ type: "RANDOM", len: v }));
+          }}
+          style={{ width: "125px" }}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
       </div>
     </React.Fragment>
