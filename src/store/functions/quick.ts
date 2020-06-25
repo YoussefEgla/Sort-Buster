@@ -68,6 +68,6 @@ export default function (arr: DATA_SET) {
     done: true,
   }));
 
-  steps.push(final);
+  steps.push([...final]);
   return steps;
 }
