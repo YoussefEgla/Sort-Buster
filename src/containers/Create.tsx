@@ -7,6 +7,7 @@ export function Create() {
   const dispatch = ReactRedux.useDispatch();
 
   const [len, setLen] = React.useState(0);
+  const [maxValue, setmaxVal] = React.useState<number | undefined>(100);
 
   return (
     <React.Fragment>
@@ -21,7 +22,11 @@ export function Create() {
         <Material.Button
           onClick={() =>
             dispatch(
-              actions.create({ type: "RANDOM", len: len ? len : undefined })
+              actions.create({
+                type: "RANDOM",
+                len: len ? len : undefined,
+                maxValue,
+              })
             )
           }
           variant="contained"
@@ -35,6 +40,7 @@ export function Create() {
               actions.create({
                 type: "NEARLY SORTED",
                 len: len ? len : undefined,
+                maxValue,
               })
             )
           }
@@ -46,7 +52,11 @@ export function Create() {
         <Material.Button
           onClick={() =>
             dispatch(
-              actions.create({ type: "SORTED", len: len ? len : undefined })
+              actions.create({
+                type: "SORTED",
+                len: len ? len : undefined,
+                maxValue,
+              })
             )
           }
           variant="contained"
@@ -75,7 +85,7 @@ export function Create() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          width: "75%",
+          width: "100%",
           margin: "25px auto 0 auto",
         }}
       >
@@ -91,17 +101,37 @@ export function Create() {
           }
         />
         <Material.TextField
-          id="standard-number"
+          label="Max value"
+          type="number"
+          helperText="num <= 0 = undefined"
+          onChange={(e) => {
+            const v =
+              parseInt(e.target.value) <= 0
+                ? undefined
+                : parseInt(e.target.value);
+            setmaxVal(v);
+            dispatch(actions.create({ type: "RANDOM", len, maxValue: v }));
+          }}
+          style={{ width: "150px" }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <Material.TextField
           label="Dataset length"
-          helperText={`0 | null = random len`}
+          helperText={`len < 0 || null = random`}
           type="number"
           onChange={(e) => {
             const v =
-              parseInt(e.target.value) < 0 ? 0 : parseInt(e.target.value);
+              parseInt(e.target.value) < 0
+                ? 0
+                : parseInt(e.target.value) > 50
+                ? 50
+                : parseInt(e.target.value);
             setLen(v);
             dispatch(actions.create({ type: "RANDOM", len: v }));
           }}
-          style={{ width: "125px" }}
+          style={{ width: "150px" }}
           InputLabelProps={{
             shrink: true,
           }}
